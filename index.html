@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIVAL AUTO — Concession &amp; Importation Automobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B0B0C;
+  --surface:#18181B;
+  --surface-2:#222226;
+  --line:rgba(245,244,242,0.12);
+  --paper:#F5F4F2;
+  --paper-dim:#A9A8AC;
+  --brass:#2056A6;
+  --brass-bright:#3B72C4;
+  --brass-dim:rgba(32,86,166,0.16);
+  --blue:#9AA3AE;
+  --blue-bright:#C3C9D1;
+  --blue-dim:rgba(154,163,174,0.14);
+  --ok:#4E9B6E;
+  --warn:#C69A4A;
+  --danger:#B0574F;
+  --font-display:'Fraunces',serif;
+  --font-body:'Inter',sans-serif;
+  --font-ar:'Cairo',sans-serif;
+  --radius:2px;
+  --radius-lg:4px;
+  --maxw:1180px;
+}
+:root[data-theme="light"]{
+  --ink:#F4F2ED;
+  --surface:#FFFFFF;
+  --surface-2:#EDEAE2;
+  --line:rgba(14,17,22,0.12);
+  --paper:#14171C;
+  --paper-dim:#5B5749;
+  --brass-dim:rgba(176,141,87,0.14);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+html[dir="rtl"] body{ font-family:var(--font-ar); }
+html[dir="rtl"] .display{ font-family:var(--font-ar); font-weight:700; }
+img,svg{max-width:100%; display:block;}
+a{color:inherit; text-decoration:none;}
+button{font-family:inherit; cursor:pointer;}
+ul{list-style:none;}
+.display{ font-family:var(--font-display); font-weight:500; letter-spacing:-0.01em; }
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; }
+::selection{ background:var(--brass); color:var(--ink); }
+:focus-visible{ outline:2px solid var(--brass-bright); outline-offset:3px; }
+
+/* ---------- top utility bar ---------- */
+.topbar{
+  background:var(--surface); border-bottom:1px solid var(--line);
+  font-size:12.5px; color:var(--paper-dim);
+}
+.topbar .wrap{ display:flex; justify-content:space-between; align-items:center; height:38px; gap:16px;}
+.topbar .contacts{ display:flex; gap:22px; }
+.topbar .contacts span{ display:flex; align-items:center; gap:6px; white-space:nowrap; }
+.lang-switch{ display:flex; gap:2px; background:var(--surface-2); border-radius:20px; padding:2px; }
+.lang-switch button{
+  background:none; border:none; color:var(--paper-dim); font-size:11.5px; font-weight:600;
+  padding:4px 11px; border-radius:20px; letter-spacing:.03em;
+}
+.lang-switch button.active{ background:var(--brass); color:var(--ink); }
+
+/* ---------- navbar ---------- */
+.navbar{
+  position:sticky; top:0; z-index:50;
+  background:rgba(14,17,22,0.88); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+:root[data-theme="light"] .navbar{ background:rgba(244,242,237,0.9); }
+.navbar .wrap{ display:flex; align-items:center; justify-content:space-between; height:76px; gap:24px;}
+.brand{ display:flex; align-items:center; gap:12px; }
+.brand .mark{ width:38px; height:38px; flex:none; }
+.logo-plate{ background:#fff; border-radius:9px; padding:7px 14px 5px; display:flex; align-items:center; line-height:0; box-shadow:0 4px 14px rgba(0,0,0,.35); }
+.logo-mark{ height:38px; width:auto; flex:none; display:block; }
+@media (max-width:600px){ .logo-mark{ height:30px; } .logo-plate{ padding:5px 10px 4px; } }
+.brand .name{ font-family:var(--font-display); font-size:19px; font-weight:600; letter-spacing:.02em; }
+.brand .name b{ color:var(--brass-bright); font-weight:600; }
+.navlinks{ display:flex; gap:30px; align-items:center; position:relative; }
+.navlinks a{ font-size:14px; font-weight:500; color:var(--paper-dim); position:relative; padding:6px 0; transition:color .2s ease; }
+.navlinks a:hover, .navlinks a.active{ color:var(--paper); }
+.nav-indicator{
+  position:absolute; bottom:0; height:2px; background:var(--brass); border-radius:2px; width:0; left:0;
+  transition:transform .4s cubic-bezier(.65,0,.35,1), width .4s cubic-bezier(.65,0,.35,1), opacity .25s ease;
+  opacity:0; pointer-events:none;
+}
+.nav-indicator.show{ opacity:1; }
+.nav-cta{ display:flex; align-items:center; gap:14px; }
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:11px 22px; border-radius:var(--radius); font-size:13.5px; font-weight:600;
+  letter-spacing:.01em; border:1px solid transparent; transition:transform .18s ease, background .2s ease, box-shadow .25s ease;
+}
+.btn:active{ transform:scale(.98); }
+.btn-brass{ background:var(--brass); color:#fff; box-shadow:0 0 0 rgba(32,86,166,0); }
+.btn-brass:hover{ background:var(--brass-bright); box-shadow:0 10px 26px -4px var(--brass-dim), 0 4px 12px rgba(0,0,0,.3); transform:translateY(-2px); }
+.btn-outline{ border-color:var(--line); color:var(--paper); }
+.btn-outline:hover{ border-color:var(--brass); color:var(--brass-bright); }
+.btn-ghost{ color:var(--paper-dim); }
+.btn-ghost:hover{ color:var(--paper); }
+.btn-sm{ padding:8px 16px; font-size:12.5px; }
+.burger{ display:none; }
+
+/* ---------- page mechanics ---------- */
+main{ min-height:60vh; }
+.page{ display:none; }
+.page.active{ display:block; animation:fade .35s ease; }
+@keyframes fade{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+@media (prefers-reduced-motion: reduce){ .page.active{animation:none;} }
+
+section{ padding:88px 0; }
+.section-tight{ padding:56px 0; }
+.eyebrow{ color:var(--brass); font-size:13px; font-weight:600; margin-bottom:14px; }
+h1.display{ font-size:56px; line-height:1.04; }
+h2.display{ font-size:38px; line-height:1.12; }
+h3.display{ font-size:24px; line-height:1.2; }
+p.lede{ font-size:18px; color:var(--paper-dim); max-width:52ch; }
+.divider{ height:1px; background:var(--line); border:none; margin:0; }
+
+/* ---------- hero ---------- */
+.hero{ padding-top:72px; padding-bottom:60px; position:relative; overflow:hidden; }
+.hero-stripes{ position:absolute; top:-10%; right:-6%; width:640px; max-width:70%; opacity:.35; pointer-events:none; z-index:0; }
+.hero-wordmark{
+  position:absolute; top:52%; left:50%; transform:translate(-50%,-50%); white-space:nowrap;
+  font-family:var(--font-display); font-weight:600; font-size:min(19vw,260px); letter-spacing:-.02em;
+  color:transparent; -webkit-text-stroke:1px var(--line); pointer-events:none; z-index:0; user-select:none;
+}
+.hero-grid{ display:grid; grid-template-columns:1.15fr 1fr; gap:56px; align-items:center; position:relative; z-index:1; }
+.hero-stats{ display:flex; gap:34px; margin-top:38px; }
+.hero-stats .stat b{ display:block; font-family:var(--font-display); font-size:28px; color:var(--brass-bright); }
+.hero-stats .stat span{ font-size:12.5px; color:var(--paper-dim); }
+.hero-actions{ display:flex; gap:14px; margin-top:36px; flex-wrap:wrap; }
+.hero-art{ position:relative; }
+.hero-art .plate{
+  background:linear-gradient(155deg, var(--surface) 0%, var(--surface-2) 100%);
+  border:1px solid var(--line); border-radius:var(--radius-lg);
+  padding:34px; position:relative; overflow:hidden;
+}
+.hero-art .plate::before{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(circle at 30% 20%, var(--brass-dim), transparent 55%);
+}
+.hero-art svg{ position:relative; z-index:1; color:var(--brass); }
+.hero-art svg path, .hero-art svg rect, .hero-art svg circle{
+  stroke-dasharray:900; stroke-dashoffset:900; animation:draw-in 1.6s cubic-bezier(.2,.7,.2,1) forwards;
+  animation-delay:.15s;
+}
+@keyframes draw-in{ to{ stroke-dashoffset:0; } }
+@media (prefers-reduced-motion: reduce){ .hero-art svg path, .hero-art svg rect, .hero-art svg circle{ animation:none; stroke-dashoffset:0; } }
+.badge-float{
+  position:absolute; background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--radius-lg); padding:12px 16px; font-size:12.5px; box-shadow:0 18px 40px rgba(0,0,0,.35);
+  opacity:0; animation:badge-in .5s ease forwards;
+}
+@keyframes badge-in{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+.badge-float b{ display:block; font-family:var(--font-display); font-size:17px; color:var(--brass-bright); }
+.badge-float.b1{ top:-14px; left:-14px; animation-delay:1.1s; }
+.badge-float.b2{ bottom:-14px; right:-14px; animation-delay:1.35s; }
+
+/* ---------- brand strip ---------- */
+.brandstrip{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:26px 0; }
+.brandstrip .wrap{ display:flex; align-items:center; gap:28px; flex-wrap:wrap; justify-content:space-between; }
+.brandstrip .label{ font-size:12px; color:var(--paper-dim); white-space:nowrap; }
+.brandchips{ display:flex; gap:10px; flex-wrap:wrap; }
+.chip{
+  border:1px solid var(--line); padding:7px 14px; border-radius:20px; font-size:13px; color:var(--paper-dim);
+}
+
+/* ---------- section headers ---------- */
+.section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:40px; }
+
+/* ---------- vehicle cards ---------- */
+.vgrid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.vgrid.bento .vcard:first-child{ grid-column:span 2; }
+.vgrid.bento .vcard:first-child .thumb{ aspect-ratio:16/9; }
+@media (max-width:980px){ .vgrid.bento .vcard:first-child{ grid-column:span 2; } .vgrid.bento .vcard:first-child .thumb{ aspect-ratio:4/3; } }
+@media (max-width:600px){ .vgrid.bento .vcard:first-child{ grid-column:span 1; } .vgrid.bento .vcard:first-child .thumb{ aspect-ratio:4/3; } }
+.vgrid.cols-3{ grid-template-columns:repeat(3,1fr); }
+.vcard{
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg);
+  overflow:hidden; display:flex; flex-direction:column; transition:border-color .25s ease, transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease;
+}
+.vcard:hover{ border-color:var(--brass); transform:translateY(-5px); box-shadow:0 20px 40px -12px rgba(0,0,0,.45); }
+.vcard .thumb{
+  aspect-ratio:4/3; position:relative; display:flex; align-items:center; justify-content:center;
+  border-bottom:1px solid var(--line);
+}
+.vcard .thumb svg{ width:62%; color:var(--brass); transition:transform .45s cubic-bezier(.2,.8,.2,1); }
+.vcard .thumb img{ width:100%; height:100%; object-fit:cover; transition:transform .45s cubic-bezier(.2,.8,.2,1); }
+.vcard:hover .thumb img{ transform:scale(1.06); }
+.vcard:hover .thumb svg{ transform:scale(1.07) rotate(-1deg); }
+.vcard .tag{
+  position:absolute; top:10px; inset-inline-start:10px; font-size:11px; font-weight:700; letter-spacing:.03em;
+  padding:4px 10px; border-radius:20px; background:var(--ink); color:var(--paper);
+}
+.vcard .tag.used{ background:var(--surface-2); color:var(--paper-dim); border:1px solid var(--line); }
+.vcard .body{ padding:16px 18px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+.vcard .brand-m{ font-size:11.5px; color:var(--blue-bright); text-transform:uppercase; letter-spacing:.05em; font-weight:600; }
+.vcard h4{ font-family:var(--font-display); font-size:19px; font-weight:600; }
+.vcard .specs{ display:flex; gap:10px; font-size:12px; color:var(--paper-dim); flex-wrap:wrap; }
+.vcard .price-row{ display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:10px; border-top:1px solid var(--line); }
+.vcard .price{ font-family:var(--font-display); font-size:18px; color:var(--brass-bright); }
+.vcard .price small{ font-family:var(--font-body); font-size:11px; color:var(--paper-dim); }
+
+.rail{ display:flex; gap:20px; overflow-x:auto; padding-bottom:12px; scroll-snap-type:x proximity; }
+.rail .vcard{ min-width:280px; scroll-snap-align:start; }
+.rail::-webkit-scrollbar{ height:6px; }
+.rail::-webkit-scrollbar-thumb{ background:var(--line); border-radius:6px; }
+
+/* ---------- process steps ---------- */
+.steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; counter-reset:step; }
+.step{ border-top:2px solid var(--brass); padding-top:20px; }
+.step .num{ font-family:var(--font-display); font-size:34px; color:var(--brass); display:block; margin-bottom:12px; }
+.step h4{ font-size:17px; margin-bottom:8px; font-weight:600; }
+.step p{ font-size:14px; color:var(--paper-dim); }
+
+/* ---------- cta banner ---------- */
+.cta-banner{
+  background:linear-gradient(120deg, var(--surface) 0%, var(--surface-2) 100%);
+  border:1px solid var(--line); border-radius:var(--radius-lg); padding:52px;
+  display:flex; justify-content:space-between; align-items:center; gap:30px; flex-wrap:wrap;
+  position:relative; overflow:hidden;
+}
+.cta-banner::before{
+  content:""; position:absolute; inset:-60% -10%; pointer-events:none;
+  background:repeating-linear-gradient(115deg, var(--brass) 0 3px, transparent 3px 52px);
+  opacity:.08;
+}
+.cta-banner > *{ position:relative; z-index:1; }
+
+/* ---------- filter bar ---------- */
+.filterbar{
+  display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end; background:var(--surface);
+  border:1px solid var(--line); border-radius:var(--radius-lg); padding:22px; margin-bottom:34px;
+}
+.field{ display:flex; flex-direction:column; gap:6px; }
+.field label{ font-size:11.5px; color:var(--paper-dim); font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
+.field select, .field input{
+  background:var(--surface-2); border:1px solid var(--line); color:var(--paper);
+  padding:10px 12px; border-radius:var(--radius); font-size:13.5px; min-width:150px; font-family:inherit;
+}
+.field input::placeholder{ color:var(--paper-dim); }
+.results-count{ font-size:13px; color:var(--paper-dim); margin-bottom:18px; }
+
+/* ---------- vehicle detail ---------- */
+.detail-hero{ position:relative; overflow:hidden; }
+.detail-stripes{ position:absolute; top:-8%; right:-4%; width:360px; max-width:44%; opacity:.28; pointer-events:none; z-index:0; }
+.detail-grid{ display:grid; grid-template-columns:1.2fr 1fr; gap:48px; position:relative; z-index:1; }
+.gallery-main{
+  aspect-ratio:16/10; border:1px solid var(--line); border-radius:var(--radius-lg); background:var(--surface);
+  display:flex; align-items:center; justify-content:center; margin-bottom:14px; position:relative; overflow:hidden;
+}
+.gallery-main svg{ width:56%; color:var(--brass); transition:opacity .2s ease; }
+.gallery-main img{ width:100%; height:100%; object-fit:cover; }
+.gallery-main.draw-target svg path, .gallery-main.draw-target svg rect, .gallery-main.draw-target svg circle{
+  stroke-dasharray:900; stroke-dashoffset:900; animation:draw-in 1.3s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.gallery-thumbs{ display:flex; gap:10px; }
+.gallery-thumbs div{
+  flex:1; aspect-ratio:1; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface);
+  display:flex; align-items:center; justify-content:center; cursor:pointer; overflow:hidden;
+  transition:border-color .2s ease, transform .2s ease;
+}
+.gallery-thumbs div img{ width:100%; height:100%; object-fit:cover; }
+.gallery-thumbs div svg{ width:60%; opacity:.7; color:var(--brass); }
+.gallery-thumbs div:hover{ border-color:var(--brass); transform:translateY(-2px); }
+.gallery-thumbs div.active{ border-color:var(--brass); background:var(--brass-dim); }
+.gallery-thumbs div.active svg{ opacity:1; }
+.spec-table{ width:100%; border-collapse:collapse; margin:22px 0; }
+.spec-table tr{ border-bottom:1px solid var(--line); transition:background .15s ease; }
+.spec-table tr:hover{ background:var(--surface); }
+.spec-table td{ padding:11px 4px; font-size:14px; }
+.spec-table td:first-child{ color:var(--paper-dim); width:44%; }
+.spec-table td:last-child{ font-weight:600; }
+.price-box{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg); padding:26px; margin-bottom:24px; position:relative; overflow:hidden; }
+.price-box::before{ content:""; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--brass) 0%, var(--brass-bright) 50%, transparent 100%); }
+.price-box .amount{ font-family:var(--font-display); font-size:34px; color:var(--brass-bright); }
+.price-box .amount small{ font-size:14px; color:var(--paper-dim); font-family:var(--font-body); }
+.price-box .actions{ display:flex; gap:12px; margin-top:18px; flex-wrap:wrap; }
+
+/* ---------- forms ---------- */
+.formgrid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.formgrid .full{ grid-column:1/-1; }
+.form-field{ display:flex; flex-direction:column; gap:7px; }
+.form-field label{ font-size:13px; font-weight:600; }
+.form-field input, .form-field select, .form-field textarea{
+  background:var(--surface); border:1px solid var(--line); color:var(--paper); padding:12px 14px;
+  border-radius:var(--radius); font-size:14px; font-family:inherit;
+}
+.form-field textarea{ resize:vertical; min-height:110px; }
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus{ border-color:var(--brass); }
+
+/* ---------- cards / info ---------- */
+.infogrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+.infocard{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg); padding:26px; }
+.infocard .icn{ width:34px; height:34px; margin-bottom:16px; color:var(--brass); }
+.infocard h4{ font-size:16px; margin-bottom:8px; font-weight:600; }
+.infocard p{ font-size:13.5px; color:var(--paper-dim); }
+
+.map-illustration{
+  border:1px solid var(--line); border-radius:var(--radius-lg); background:var(--surface); aspect-ratio:16/7;
+  position:relative; overflow:hidden; color:var(--brass);
+}
+.hours-table{ width:100%; border-collapse:collapse; }
+.hours-table tr{ transition:background .15s ease; }
+.hours-table tr:hover{ background:var(--surface); }
+.hours-table td{ padding:9px 6px; border-bottom:1px solid var(--line); font-size:13.5px; }
+.hours-table td:last-child{ text-align:end; color:var(--paper-dim); }
+.map-pulse{ transform-origin:250px 120px; animation:pulse-ring 2.4s ease-out infinite; }
+@keyframes pulse-ring{ 0%{ r:7; opacity:.9; } 100%{ r:26; opacity:0; } }
+@media (prefers-reduced-motion: reduce){ .map-pulse{ animation:none; opacity:0; } }
+
+/* ---------- timeline (about) ---------- */
+.timeline{ display:flex; flex-direction:column; gap:0; margin-top:20px; }
+.tl-item{ display:grid; grid-template-columns:90px 1fr; gap:22px; padding:22px 0; border-top:1px solid var(--line); }
+.tl-item .yr{ font-family:var(--font-display); font-size:20px; color:var(--brass-bright); }
+.tl-item h4{ font-size:15.5px; margin-bottom:6px; font-weight:600; }
+.tl-item p{ font-size:13.5px; color:var(--paper-dim); }
+
+.statsband{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; text-align:center; padding:44px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.statsband .n{ font-family:var(--font-display); font-size:40px; color:var(--brass-bright); }
+.statsband .l{ font-size:12.5px; color:var(--paper-dim); margin-top:6px; }
+
+/* ---------- account / dashboards ---------- */
+.dash-shell{ display:grid; grid-template-columns:240px 1fr; gap:0; border:1px solid var(--line); border-radius:var(--radius-lg); overflow:hidden; min-height:560px; }
+.dash-side{ background:var(--surface); border-inline-end:1px solid var(--line); padding:26px 18px; }
+.dash-side .who{ display:flex; align-items:center; gap:12px; padding:0 8px 22px; border-bottom:1px solid var(--line); margin-bottom:18px; }
+.dash-side .who .avatar{ width:40px; height:40px; border-radius:50%; background:var(--brass-dim); display:flex; align-items:center; justify-content:center; color:var(--brass-bright); font-weight:700; font-family:var(--font-display); }
+.dash-side .who .nm{ font-size:14px; font-weight:600; }
+.dash-side .who .rl{ font-size:11.5px; color:var(--paper-dim); }
+.dash-nav button{
+  display:flex; align-items:center; gap:10px; width:100%; text-align:start; background:none; border:none;
+  color:var(--paper-dim); font-size:13.5px; font-weight:500; padding:11px 10px; border-radius:var(--radius); margin-bottom:2px;
+}
+.dash-nav button.active{ background:var(--brass-dim); color:var(--brass-bright); }
+.dash-nav button:hover{ color:var(--paper); }
+.dash-main{ padding:30px; background:var(--ink); }
+.dash-tab{ display:none; }
+.dash-tab.active{ display:block; }
+.kpi-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; }
+.kpi{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg); padding:18px 20px; }
+.kpi .v{ font-family:var(--font-display); font-size:26px; color:var(--brass-bright); }
+.kpi .l{ font-size:12px; color:var(--paper-dim); margin-top:4px; }
+.kpi .d{ font-size:11px; margin-top:8px; font-weight:600; }
+.kpi .d.up{ color:var(--ok); } .kpi .d.down{ color:var(--danger); }
+
+table.data{ width:100%; border-collapse:collapse; font-size:13.5px; }
+table.data thead th{ text-align:start; font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--paper-dim); padding:0 12px 12px; border-bottom:1px solid var(--line); font-weight:600; }
+table.data tbody td{ padding:13px 12px; border-bottom:1px solid var(--line); }
+table.data tbody tr:hover{ background:var(--surface); }
+.status-pill{ display:inline-block; padding:4px 11px; border-radius:20px; font-size:11.5px; font-weight:600; }
+.status-pill.ok{ background:rgba(110,155,122,.15); color:var(--ok); }
+.status-pill.warn{ background:rgba(198,154,74,.15); color:var(--warn); }
+.status-pill.danger{ background:rgba(176,87,79,.15); color:var(--danger); }
+.status-pill.info{ background:var(--blue-dim); color:var(--blue-bright); }
+.row-actions{ display:flex; gap:8px; }
+.row-actions button{ background:none; border:1px solid var(--line); color:var(--paper-dim); padding:5px 11px; border-radius:var(--radius); font-size:12px; }
+.row-actions button:hover{ color:var(--paper); border-color:var(--brass); }
+.table-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg); padding:22px; overflow-x:auto; margin-bottom:26px; }
+.table-card .thead-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+.table-card h3{ font-size:16px; font-weight:600; font-family:var(--font-display); }
+.notice{ background:var(--brass-dim); border:1px solid var(--line); border-inline-start:3px solid var(--brass); border-radius:var(--radius); padding:14px 16px; font-size:13px; color:var(--paper-dim); margin-bottom:22px; }
+
+/* ---------- auth card ---------- */
+.auth-card{ max-width:420px; margin:0 auto; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg); padding:40px; text-align:center; }
+.auth-tabs{ display:flex; border:1px solid var(--line); border-radius:20px; padding:3px; margin-bottom:26px; }
+.auth-tabs button{ flex:1; background:none; border:none; padding:8px; border-radius:18px; font-size:13px; color:var(--paper-dim); font-weight:600; }
+.auth-tabs button.active{ background:var(--brass); color:var(--ink); }
+
+/* ---------- toast ---------- */
+#toast{
+  position:fixed; bottom:24px; inset-inline-end:24px; background:var(--surface); border:1px solid var(--brass);
+  color:var(--paper); padding:14px 20px; border-radius:var(--radius); font-size:13.5px; box-shadow:0 18px 40px rgba(0,0,0,.4);
+  transform:translateY(140%); transition:transform .35s ease; z-index:200; max-width:320px;
+}
+#toast.show{ transform:translateY(0); }
+
+/* ---------- footer ---------- */
+footer{ border-top:1px solid var(--line); padding:64px 0 26px; background:var(--surface); }
+.foot-grid{ display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:40px; margin-bottom:46px; }
+.foot-grid h5{ font-size:12.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--paper-dim); margin-bottom:16px; }
+.foot-grid ul li{ margin-bottom:10px; font-size:13.5px; }
+.foot-grid ul li a:hover{ color:var(--brass-bright); }
+.foot-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:24px; border-top:1px solid var(--line); font-size:12.5px; color:var(--paper-dim); flex-wrap:wrap; gap:12px; }
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .navlinks{ display:none; }
+  .burger{ display:flex; }
+  .hero-grid, .detail-grid{ grid-template-columns:1fr; }
+  .vgrid, .vgrid.cols-3{ grid-template-columns:repeat(2,1fr); }
+  .steps, .infogrid, .statsband{ grid-template-columns:repeat(2,1fr); }
+  .foot-grid{ grid-template-columns:1fr 1fr; }
+  .dash-shell{ grid-template-columns:1fr; }
+  .dash-side{ border-inline-end:none; border-bottom:1px solid var(--line); }
+  .formgrid, .kpi-row{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:600px){
+  h1.display{ font-size:36px; }
+  h2.display{ font-size:28px; }
+  .vgrid, .vgrid.cols-3, .steps, .infogrid, .statsband, .kpi-row, .formgrid{ grid-template-columns:1fr; }
+  .section-head{ flex-direction:column; align-items:flex-start; }
+  .cta-banner{ flex-direction:column; text-align:center; }
+  .topbar .contacts span:nth-child(n+2){ display:none; }
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="contacts">
+      <span>☎ +213 23 45 67 89</span>
+      <span>✉ contact@vival-auto.dz</span>
+      <span data-i18n="topbar.hours">Lun–Sam · 9h–18h</span>
+    </div>
+    <div class="lang-switch" role="group" aria-label="Langue">
+      <button data-lang="fr" class="active">FR</button>
+      <button data-lang="ar">AR</button>
+      <button data-lang="en">EN</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar">
+  <div class="wrap">
+    <a href="#home" class="brand">
+      <span class="logo-plate"><img class="logo-mark" src="data:image/png;base64,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" alt="VIVAL AUTO"></span>
+    </a>
+    <div class="navlinks" id="navlinks">
+      <a href="#home" data-i18n="nav.home">Accueil</a>
+      <a href="#vehicles" data-i18n="nav.vehicles">Véhicules</a>
+      <a href="#showroom" data-i18n="nav.showroom">Showroom</a>
+      <a href="#import" data-i18n="nav.import">Importation</a>
+      <a href="#about" data-i18n="nav.about">À propos</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <span class="nav-indicator" id="navIndicator"></span>
+    </div>
+    <div class="nav-cta">
+      <a href="#account" class="btn btn-ghost btn-sm" data-i18n="nav.account">Espace Client</a>
+      <a href="#import" class="btn btn-brass btn-sm" data-i18n="nav.cta">Demander une importation</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main"></main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="name display" style="font-size:20px;">VIVAL <b style="color:var(--brass-bright);">AUTO</b></span>
+        <p style="margin-top:14px; font-size:13.5px; color:var(--paper-dim); max-width:34ch;" data-i18n="footer.tagline">Concession et importation automobile de référence en Algérie. Véhicules neufs, d'occasion et sur commande internationale.</p>
+      </div>
+      <div>
+        <h5 data-i18n="footer.nav">Navigation</h5>
+        <ul>
+          <li><a href="#vehicles" data-i18n="nav.vehicles">Véhicules</a></li>
+          <li><a href="#showroom" data-i18n="nav.showroom">Showroom</a></li>
+          <li><a href="#import" data-i18n="nav.import">Importation</a></li>
+          <li><a href="#about" data-i18n="nav.about">À propos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-i18n="footer.space">Espaces</h5>
+        <ul>
+          <li><a href="#account" data-i18n="nav.account">Espace Client</a></li>
+          <li><a href="#agent" data-i18n="footer.agent">Espace Agent</a></li>
+          <li><a href="#admin" data-i18n="footer.admin">Administration</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-i18n="footer.contact">Contact</h5>
+        <ul>
+          <li>Route Nationale 5, Alger</li>
+          <li>+213 23 45 67 89</li>
+          <li>contact@vival-auto.dz</li>
+        </ul>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="foot-bottom">
+      <span data-i18n="footer.rights">© 2026 VIVAL AUTO — Tous droits réservés</span>
+      <span data-i18n="footer.legal">Mentions légales · Confidentialité · CGV</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   SUPABASE CONFIG
+   Create a free project at https://supabase.com, run the two
+   SQL files from /supabase in the SQL Editor, then paste your
+   Project URL and anon public key below (Project Settings → API).
+   Until you fill these in, the site runs on the placeholder
+   catalog below so nothing breaks.
+   ========================================================= */
+const SUPABASE_URL = 'https://xvyiklhlgbpmvhrldoag.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_QTt0jEQOPfoQ5MSUROr0cQ_CRLbrRo3';
+const BACKEND_READY = !SUPABASE_URL.startsWith('PASTE_') && !SUPABASE_ANON_KEY.startsWith('PASTE_');
+const sb = BACKEND_READY ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+let CURRENT_USER = null;
+let CURRENT_ROLE = null;
+
+/* =========================================================
+   DATA
+   ========================================================= */
+const CAR_ICONS = [
+`<svg viewBox="0 0 200 100" fill="none"><path d="M20 68 L34 45 C38 38 46 33 55 33 L138 33 C147 33 155 38 159 45 L173 68" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linejoin="round"/><rect x="8" y="66" width="184" height="18" rx="9" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M62 33 L70 48 M128 33 L120 48" stroke="currentColor" stroke-width="2"/><circle cx="52" cy="84" r="12" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="148" cy="84" r="12" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>`,
+`<svg viewBox="0 0 200 100" fill="none"><path d="M14 66 L30 40 C34 34 44 30 56 30 L100 30 L146 30 C154 30 160 34 164 40 L184 66" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linejoin="round"/><rect x="6" y="64" width="188" height="20" rx="6" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M58 30 L64 46 M138 30 L132 46" stroke="currentColor" stroke-width="2"/><circle cx="48" cy="84" r="13" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="152" cy="84" r="13" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>`,
+`<svg viewBox="0 0 200 100" fill="none"><path d="M24 70 L36 48 C40 41 48 36 57 36 L134 36 C142 36 150 41 154 48 L168 70" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linejoin="round"/><rect x="12" y="68" width="176" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M64 36 L70 50 M126 36 L120 50" stroke="currentColor" stroke-width="2"/><circle cx="56" cy="84" r="11" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="144" cy="84" r="11" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>`
+];
+
+const MOCK_VEHICLES = [
+  {id:1, brand:"Toyota", model:"Corolla", version:"Dynamic", year:2026, type:"new", cat:"showroom", price:4250000, mileage:0, fuel:{fr:"Essence",en:"Petrol",ar:"بنزين"}, gearbox:{fr:"Automatique",en:"Automatic",ar:"أوتوماتيك"}, color:{fr:"Blanc nacré",en:"Pearl white",ar:"أبيض لؤلؤي"}, icon:0},
+  {id:2, brand:"Hyundai", model:"Tucson", version:"Executive", year:2025, type:"new", cat:"showroom", price:6890000, mileage:0, fuel:{fr:"Diesel",en:"Diesel",ar:"ديزل"}, gearbox:{fr:"Automatique",en:"Automatic",ar:"أوتوماتيك"}, color:{fr:"Gris titane",en:"Titanium grey",ar:"رمادي تيتانيوم"}, icon:1},
+  {id:3, brand:"Renault", model:"Clio", version:"Zen", year:2024, type:"used", cat:"showroom", price:2450000, mileage:18500, fuel:{fr:"Essence",en:"Petrol",ar:"بنزين"}, gearbox:{fr:"Manuelle",en:"Manual",ar:"يدوي"}, color:{fr:"Rouge flamme",en:"Flame red",ar:"أحمر ناري"}, icon:2},
+  {id:4, brand:"Mercedes-Benz", model:"GLC 300", version:"AMG Line", year:2026, type:"new", cat:"import", price:12900000, mileage:0, fuel:{fr:"Hybride",en:"Hybrid",ar:"هجين"}, gearbox:{fr:"Automatique",en:"Automatic",ar:"أوتوماتيك"}, color:{fr:"Noir obsidienne",en:"Obsidian black",ar:"أسود أوبسيديان"}, icon:1},
+  {id:5, brand:"Dacia", model:"Duster", version:"Journey", year:2025, type:"new", cat:"showroom", price:3190000, mileage:0, fuel:{fr:"Diesel",en:"Diesel",ar:"ديزل"}, gearbox:{fr:"Manuelle",en:"Manual",ar:"يدوي"}, color:{fr:"Bleu Cosmos",en:"Cosmos blue",ar:"أزرق كوزموس"}, icon:0},
+  {id:6, brand:"Volkswagen", model:"Tiguan", version:"R-Line", year:2025, type:"new", cat:"import", price:8450000, mileage:0, fuel:{fr:"Essence",en:"Petrol",ar:"بنزين"}, gearbox:{fr:"Automatique",en:"Automatic",ar:"أوتوماتيك"}, color:{fr:"Blanc pur",en:"Pure white",ar:"أبيض نقي"}, icon:1},
+  {id:7, brand:"Peugeot", model:"308", version:"Allure", year:2023, type:"used", cat:"showroom", price:2980000, mileage:32000, fuel:{fr:"Diesel",en:"Diesel",ar:"ديزل"}, gearbox:{fr:"Manuelle",en:"Manual",ar:"يدوي"}, color:{fr:"Gris artense",en:"Artense grey",ar:"رمادي أرتنس"}, icon:2},
+  {id:8, brand:"Kia", model:"Sportage", version:"GT-Line", year:2026, type:"new", cat:"import", price:7290000, mileage:0, fuel:{fr:"Essence",en:"Petrol",ar:"بنزين"}, gearbox:{fr:"Automatique",en:"Automatic",ar:"أوتوماتيك"}, color:{fr:"Vert forêt",en:"Forest green",ar:"أخضر غابي"}, icon:0},
+  {id:9, brand:"Renault", model:"Symbol", version:"Expression", year:2022, type:"used", cat:"showroom", price:1850000, mileage:54000, fuel:{fr:"Essence",en:"Petrol",ar:"بنزين"}, gearbox:{fr:"Manuelle",en:"Manual",ar:"يدوي"}, color:{fr:"Beige sable",en:"Sand beige",ar:"بيج رملي"}, icon:2},
+  {id:10, brand:"BMW", model:"X3", version:"xDrive20d", year:2025, type:"new", cat:"import", price:11400000, mileage:0, fuel:{fr:"Diesel",en:"Diesel",ar:"ديزل"}, gearbox:{fr:"Automatique",en:"Automatic",ar:"أوتوماتيك"}, color:{fr:"Gris Mineral",en:"Mineral grey",ar:"رمادي معدني"}, icon:1},
+  {id:11, brand:"Toyota", model:"Hilux", version:"Legend", year:2025, type:"new", cat:"showroom", price:6250000, mileage:0, fuel:{fr:"Diesel",en:"Diesel",ar:"ديزل"}, gearbox:{fr:"Automatique",en:"Automatic",ar:"أوتوماتيك"}, color:{fr:"Blanc glacier",en:"Glacier white",ar:"أبيض جليدي"}, icon:0},
+  {id:12, brand:"Hyundai", model:"i20", version:"Creative", year:2023, type:"used", cat:"showroom", price:2190000, mileage:27000, fuel:{fr:"Essence",en:"Petrol",ar:"بنزين"}, gearbox:{fr:"Manuelle",en:"Manual",ar:"يدوي"}, color:{fr:"Argent polaire",en:"Polar silver",ar:"فضي قطبي"}, icon:2},
+];
+
+// VEHICLES is mutated in place once real data arrives from Supabase,
+// so every page that already reads from it just picks the new data up.
+let VEHICLES = MOCK_VEHICLES.slice();
+let USING_LIVE_DATA = false;
+
+function loc(field){
+  if(field == null) return '';
+  if(typeof field === 'object') return field[LANG] || field.fr || Object.values(field)[0] || '';
+  return field;
+}
+
+async function loadVehiclesFromSupabase(){
+  if(!BACKEND_READY) return;
+  const { data, error } = await sb.from('vehicles').select('*').order('created_at', {ascending:false});
+  if(error || !data){ console.warn('Supabase vehicles load failed', error); return; }
+  VEHICLES.length = 0;
+  data.forEach((row, i)=>{
+    VEHICLES.push({
+      id: row.id, brand: row.brand, model: row.model, version: row.version,
+      year: row.year, type: row.vtype, cat: row.category, price: Number(row.price),
+      mileage: row.mileage || 0, fuel: row.fuel, gearbox: row.gearbox, color: row.color,
+      images: row.images || [], icon: i % CAR_ICONS.length
+    });
+  });
+  USING_LIVE_DATA = true;
+  route();
+}
+
+async function refreshSession(){
+  if(!BACKEND_READY) return;
+  const { data:{ session } } = await sb.auth.getSession();
+  CURRENT_USER = session?.user || null;
+  if(CURRENT_USER){
+    const { data:profile } = await sb.from('profiles').select('role, full_name').eq('id', CURRENT_USER.id).single();
+    CURRENT_ROLE = profile?.role || 'customer';
+  } else {
+    CURRENT_ROLE = null;
+  }
+}
+
+const ORDERS = [
+  {id:"CMD-2026-118", client:"Karim Belaïd", vehicle:"Mercedes-Benz GLC 300", amount:12900000, status:"progress", date:"12 Sep 2026"},
+  {id:"CMD-2026-117", client:"Amel Cherif", vehicle:"Hyundai Tucson Executive", amount:6890000, status:"delivered", date:"08 Sep 2026"},
+  {id:"CMD-2026-116", client:"Yacine Meziane", vehicle:"BMW X3 xDrive20d", amount:11400000, status:"customs", date:"03 Sep 2026"},
+  {id:"CMD-2026-115", client:"Sofia Haddad", vehicle:"Dacia Duster Journey", amount:3190000, status:"delivered", date:"29 Aoû 2026"},
+  {id:"CMD-2026-114", client:"Nabil Ouyahia", vehicle:"Kia Sportage GT-Line", amount:7290000, status:"pending", date:"25 Aoû 2026"},
+];
+
+/* =========================================================
+   TRANSLATIONS
+   ========================================================= */
+const DICT = {
+fr:{
+  "topbar.hours":"Lun–Sam · 9h–18h",
+  "nav.home":"Accueil","nav.vehicles":"Véhicules","nav.showroom":"Showroom","nav.import":"Importation",
+  "nav.about":"À propos","nav.contact":"Contact","nav.account":"Espace Client","nav.cta":"Demander une importation",
+  "footer.tagline":"Concession et importation automobile de référence en Algérie. Véhicules neufs, d'occasion et sur commande internationale.",
+  "footer.nav":"Navigation","footer.space":"Espaces","footer.agent":"Espace Agent","footer.admin":"Administration",
+  "footer.contact":"Contact","footer.rights":"© 2026 VIVAL AUTO — Tous droits réservés","footer.legal":"Mentions légales · Confidentialité · CGV",
+  "home.eyebrow":"Concession & importation — Algérie",
+  "home.title":"L'excellence automobile, importée pour vous",
+  "home.lede":"VIVAL AUTO sélectionne, importe et livre des véhicules neufs et d'occasion partout en Algérie, avec un accompagnement complet de la commande jusqu'à la remise des clés.",
+  "home.cta1":"Découvrir le showroom","home.cta2":"Demander une importation",
+  "home.stat1n":"500+","home.stat1l":"Véhicules livrés","home.stat2n":"14","home.stat2l":"Marques partenaires","home.stat3n":"9 ans","home.stat3l":"D'expertise",
+  "home.badge1":"Nouveau","home.badge1v":"GLC 300 disponible",
+  "home.badge2":"Délai moyen","home.badge2v":"21 jours import",
+  "home.brands":"Marques disponibles",
+  "home.featured.eyebrow":"Sélection","home.featured.title":"Véhicules à la une","home.featured.link":"Voir tout le catalogue →",
+  "home.process.eyebrow":"Notre méthode","home.process.title":"Importer un véhicule, en toute confiance",
+  "home.process.s1t":"Sélection à l'international","home.process.s1p":"Nous identifions le véhicule exact que vous recherchez auprès de nos réseaux de fournisseurs agréés en Europe et en Asie.",
+  "home.process.s2t":"Dédouanement & documents","home.process.s2p":"Notre équipe gère l'intégralité des formalités douanières, de la conformité et de l'immatriculation en Algérie.",
+  "home.process.s3t":"Livraison en Algérie","home.process.s3p":"Le véhicule est livré au showroom ou à l'adresse de votre choix, prêt à rouler, avec tous les documents en règle.",
+  "home.cta.title":"Une question avant de vous décider ?","home.cta.p":"Nos conseillers répondent sous 24h, en français, arabe ou anglais.",
+  "home.cta.btn":"Contacter un conseiller",
+  "vehicles.eyebrow":"Catalogue","vehicles.title":"Tous nos véhicules",
+  "vehicles.f.brand":"Marque","vehicles.f.type":"État","vehicles.f.cat":"Catégorie","vehicles.f.price":"Budget max (DZD)","vehicles.f.search":"Recherche",
+  "vehicles.f.all":"Toutes","vehicles.f.new":"Neuf","vehicles.f.used":"Occasion","vehicles.f.showroom":"Showroom","vehicles.f.import":"Importation",
+  "vehicles.f.searchph":"Modèle, marque…",
+  "vehicles.results":"véhicules trouvés",
+  "vehicles.viewbtn":"Voir la fiche",
+  "showroom.eyebrow":"Notre showroom","showroom.title":"Visitez notre showroom à Alger",
+  "showroom.lede":"Plus de 40 véhicules exposés en permanence, essais routiers sur rendez-vous et conseillers disponibles 6 jours sur 7.",
+  "showroom.infot":"Informations pratiques","showroom.addr":"Adresse","showroom.addrv":"Route Nationale 5, Zone Industrielle, Alger","showroom.phone":"Téléphone","showroom.hourst":"Horaires d'ouverture",
+  "showroom.d1":"Lundi – Jeudi","showroom.d2":"Vendredi","showroom.d3":"Samedi","showroom.d4":"Dimanche","showroom.closed":"Fermé",
+  "showroom.fleet.title":"Véhicules exposés actuellement",
+  "import.eyebrow":"Service d'importation","import.title":"Commandez le véhicule de vos rêves, où qu'il soit",
+  "import.lede":"VIVAL AUTO importe des véhicules neufs et d'occasion depuis l'Europe, l'Asie et les États-Unis, avec prise en charge complète des démarches douanières.",
+  "import.form.title":"Demande de devis d'importation",
+  "import.form.brand":"Marque souhaitée","import.form.model":"Modèle souhaité","import.form.budget":"Budget estimé (DZD)","import.form.name":"Nom complet",
+  "import.form.phone":"Téléphone","import.form.email":"Email","import.form.msg":"Précisions (version, année, couleur…)","import.form.submit":"Envoyer la demande",
+  "import.avail.title":"Véhicules d'importation disponibles",
+  "detail.specs":"Caractéristiques","detail.year":"Année","detail.mileage":"Kilométrage","detail.fuel":"Carburant","detail.gearbox":"Boîte de vitesses","detail.color":"Couleur","detail.status":"Disponibilité",
+  "detail.available":"Disponible","detail.pricefrom":"Prix","detail.reserve":"Réserver ce véhicule","detail.contact":"Contacter un conseiller",
+  "detail.related":"Véhicules similaires",
+  "about.eyebrow":"Notre histoire","about.title":"VIVAL AUTO, la confiance automobile depuis 2017",
+  "about.lede":"Fondée à Alger, VIVAL AUTO s'est imposée comme un acteur de référence de la distribution et de l'importation automobile en Algérie, en combinant expertise technique, rigueur administrative et service client irréprochable.",
+  "about.tl1y":"2017","about.tl1t":"Création de VIVAL AUTO","about.tl1p":"Ouverture du premier showroom à Alger, spécialisé dans les véhicules d'occasion certifiés.",
+  "about.tl2y":"2019","about.tl2t":"Lancement du service d'importation","about.tl2p":"Mise en place d'un réseau de fournisseurs agréés en Europe pour l'importation sur commande.",
+  "about.tl3y":"2022","about.tl3t":"Extension du showroom","about.tl3p":"Agrandissement des installations et intégration de nouvelles marques partenaires.",
+  "about.tl4y":"2026","about.tl4t":"Plateforme digitale VIVAL AUTO","about.tl4p":"Lancement de la plateforme complète : suivi de commande, espace client et gestion digitale du stock.",
+  "about.s1":"Véhicules livrés","about.s2":"Marques partenaires","about.s3":"Clients satisfaits","about.s4":"Wilayas couvertes",
+  "contact.eyebrow":"Contact","contact.title":"Parlons de votre projet automobile",
+  "contact.lede":"Une question sur un véhicule, une commande ou une importation ? Notre équipe vous répond rapidement.",
+  "contact.f.name":"Nom complet","contact.f.email":"Email","contact.f.phone":"Téléphone","contact.f.subject":"Sujet","contact.f.msg":"Message","contact.f.submit":"Envoyer le message",
+  "contact.info1t":"Showroom","contact.info1p":"Route Nationale 5, Zone Industrielle, Alger",
+  "contact.info2t":"Téléphone","contact.info2p":"+213 23 45 67 89",
+  "contact.info3t":"Email","contact.info3p":"contact@vival-auto.dz",
+  "account.eyebrow":"Espace Client","account.title":"Accédez à votre compte",
+  "account.login":"Se connecter","account.register":"Créer un compte",
+  "account.f.email":"Email","account.f.pass":"Mot de passe","account.f.name":"Nom complet","account.f.phone":"Téléphone",
+  "account.submit":"Se connecter","account.submitreg":"Créer mon compte","account.demo":"Voir la démonstration →",
+  "account.welcome":"Bienvenue, Karim","account.d.orders":"Mes commandes","account.d.docs":"Mes documents","account.d.notif":"Notifications","account.d.profile":"Mon profil","account.logout":"Déconnexion",
+  "account.orders.title":"Historique de mes commandes",
+  "account.docs.title":"Mes documents","account.docs.p":"Factures, contrats et certificats liés à vos commandes.",
+  "account.notif.title":"Notifications récentes",
+  "account.n1":"Votre commande CMD-2026-118 est en cours de dédouanement.","account.n2":"Nouveau document disponible : facture proforma GLC 300.","account.n3":"Votre rendez-vous d'essai routier est confirmé pour le 18 septembre.",
+  "admin.eyebrow":"Administration","admin.title":"Tableau de bord — Administrateur",
+  "admin.nav.overview":"Vue d'ensemble","admin.nav.vehicles":"Véhicules","admin.nav.orders":"Commandes","admin.nav.customers":"Clients","admin.nav.agents":"Agents","admin.nav.payments":"Paiements","admin.nav.settings":"Paramètres",
+  "admin.kpi1":"Véhicules en stock","admin.kpi2":"Commandes en cours","admin.kpi3":"CA du mois (DZD)","admin.kpi4":"Nouveaux clients",
+  "admin.vehicles.title":"Gestion du parc","admin.vehicles.add":"+ Ajouter un véhicule",
+  "admin.orders.title":"Commandes récentes",
+  "admin.notice":"Les actions de création, modification et suppression seront activées lors du branchement à l'API back-end.",
+  "th.vehicle":"Véhicule","th.brand":"Marque","th.price":"Prix","th.status":"Statut","th.stock":"Stock","th.actions":"Actions","th.order":"Commande","th.client":"Client","th.amount":"Montant","th.date":"Date",
+  "agent.eyebrow":"Espace Agent","agent.title":"Tableau de bord — Agent commercial",
+  "agent.kpi1":"Clients assignés","agent.kpi2":"Commandes à traiter","agent.kpi3":"Ventes du mois (DZD)","agent.kpi4":"Taux de conversion",
+  "agent.orders.title":"Mes commandes à traiter","agent.clients.title":"Mes clients",
+  "status.pending":"En attente","status.progress":"En traitement","status.customs":"Dédouanement","status.delivered":"Livrée","status.new":"Neuf","status.used":"Occasion","status.instock":"En stock","status.low":"Stock faible",
+  "toast.form":"Merci ! Votre demande a bien été enregistrée. Un conseiller VIVAL AUTO vous contactera sous 24h.",
+  "toast.backend":"Cette action sera disponible une fois le back-end connecté.",
+  "toast.reserved":"Véhicule réservé — un conseiller vous contactera pour finaliser la commande.",
+  "toast.login":"Ceci est une démonstration. La connexion réelle sera activée avec l'authentification back-end.",
+},
+en:{
+  "topbar.hours":"Mon–Sat · 9am–6pm",
+  "nav.home":"Home","nav.vehicles":"Vehicles","nav.showroom":"Showroom","nav.import":"Import Vehicles",
+  "nav.about":"About","nav.contact":"Contact","nav.account":"Customer Account","nav.cta":"Request an import",
+  "footer.tagline":"Algeria's trusted car dealership and import specialist. New, used and internationally ordered vehicles.",
+  "footer.nav":"Navigation","footer.space":"Spaces","footer.agent":"Agent Space","footer.admin":"Administration",
+  "footer.contact":"Contact","footer.rights":"© 2026 VIVAL AUTO — All rights reserved","footer.legal":"Legal notice · Privacy · Terms",
+  "home.eyebrow":"Dealership & import — Algeria",
+  "home.title":"Automotive excellence, imported for you",
+  "home.lede":"VIVAL AUTO selects, imports and delivers new and used vehicles across Algeria, with full support from order to delivery.",
+  "home.cta1":"Explore the showroom","home.cta2":"Request an import",
+  "home.stat1n":"500+","home.stat1l":"Vehicles delivered","home.stat2n":"14","home.stat2l":"Partner brands","home.stat3n":"9 years","home.stat3l":"Of expertise",
+  "home.badge1":"New","home.badge1v":"GLC 300 available",
+  "home.badge2":"Average delay","home.badge2v":"21 days import",
+  "home.brands":"Brands we carry",
+  "home.featured.eyebrow":"Selection","home.featured.title":"Featured vehicles","home.featured.link":"View full catalog →",
+  "home.process.eyebrow":"Our process","home.process.title":"Importing a vehicle, with confidence",
+  "home.process.s1t":"International sourcing","home.process.s1p":"We locate the exact vehicle you want through our network of approved suppliers across Europe and Asia.",
+  "home.process.s2t":"Customs & paperwork","home.process.s2p":"Our team handles all customs formalities, compliance checks and registration in Algeria.",
+  "home.process.s3t":"Delivery in Algeria","home.process.s3p":"The vehicle is delivered to our showroom or your chosen address, road-ready with all documents in order.",
+  "home.cta.title":"A question before you decide?","home.cta.p":"Our advisors reply within 24h, in French, Arabic or English.",
+  "home.cta.btn":"Talk to an advisor",
+  "vehicles.eyebrow":"Catalog","vehicles.title":"All our vehicles",
+  "vehicles.f.brand":"Brand","vehicles.f.type":"Condition","vehicles.f.cat":"Category","vehicles.f.price":"Max budget (DZD)","vehicles.f.search":"Search",
+  "vehicles.f.all":"All","vehicles.f.new":"New","vehicles.f.used":"Used","vehicles.f.showroom":"Showroom","vehicles.f.import":"Import",
+  "vehicles.f.searchph":"Model, brand…",
+  "vehicles.results":"vehicles found",
+  "vehicles.viewbtn":"View details",
+  "showroom.eyebrow":"Our showroom","showroom.title":"Visit our showroom in Algiers",
+  "showroom.lede":"Over 40 vehicles on permanent display, test drives by appointment, advisors available six days a week.",
+  "showroom.infot":"Practical information","showroom.addr":"Address","showroom.addrv":"National Road 5, Industrial Zone, Algiers","showroom.phone":"Phone","showroom.hourst":"Opening hours",
+  "showroom.d1":"Monday – Thursday","showroom.d2":"Friday","showroom.d3":"Saturday","showroom.d4":"Sunday","showroom.closed":"Closed",
+  "showroom.fleet.title":"Vehicles currently on display",
+  "import.eyebrow":"Import service","import.title":"Order the vehicle of your dreams, wherever it is",
+  "import.lede":"VIVAL AUTO imports new and used vehicles from Europe, Asia and the United States, with full customs handling.",
+  "import.form.title":"Request an import quote",
+  "import.form.brand":"Desired brand","import.form.model":"Desired model","import.form.budget":"Estimated budget (DZD)","import.form.name":"Full name",
+  "import.form.phone":"Phone","import.form.email":"Email","import.form.msg":"Details (trim, year, color…)","import.form.submit":"Send request",
+  "import.avail.title":"Available import vehicles",
+  "detail.specs":"Specifications","detail.year":"Year","detail.mileage":"Mileage","detail.fuel":"Fuel","detail.gearbox":"Gearbox","detail.color":"Color","detail.status":"Availability",
+  "detail.available":"Available","detail.pricefrom":"Price","detail.reserve":"Reserve this vehicle","detail.contact":"Talk to an advisor",
+  "detail.related":"Similar vehicles",
+  "about.eyebrow":"Our story","about.title":"VIVAL AUTO, automotive trust since 2017",
+  "about.lede":"Founded in Algiers, VIVAL AUTO has become a reference in car distribution and import in Algeria, combining technical expertise, administrative rigor and flawless customer service.",
+  "about.tl1y":"2017","about.tl1t":"VIVAL AUTO founded","about.tl1p":"Opening of the first showroom in Algiers, specialized in certified used vehicles.",
+  "about.tl2y":"2019","about.tl2t":"Import service launched","about.tl2p":"A network of approved suppliers set up across Europe for made-to-order imports.",
+  "about.tl3y":"2022","about.tl3t":"Showroom expansion","about.tl3p":"Facilities expanded and new partner brands added.",
+  "about.tl4y":"2026","about.tl4t":"VIVAL AUTO digital platform","about.tl4p":"Launch of the full platform: order tracking, customer space and digital stock management.",
+  "about.s1":"Vehicles delivered","about.s2":"Partner brands","about.s3":"Satisfied customers","about.s4":"Provinces covered",
+  "contact.eyebrow":"Contact","contact.title":"Let's talk about your car project",
+  "contact.lede":"A question about a vehicle, an order or an import? Our team replies quickly.",
+  "contact.f.name":"Full name","contact.f.email":"Email","contact.f.phone":"Phone","contact.f.subject":"Subject","contact.f.msg":"Message","contact.f.submit":"Send message",
+  "contact.info1t":"Showroom","contact.info1p":"National Road 5, Industrial Zone, Algiers",
+  "contact.info2t":"Phone","contact.info2p":"+213 23 45 67 89",
+  "contact.info3t":"Email","contact.info3p":"contact@vival-auto.dz",
+  "account.eyebrow":"Customer Account","account.title":"Access your account",
+  "account.login":"Log in","account.register":"Create account",
+  "account.f.email":"Email","account.f.pass":"Password","account.f.name":"Full name","account.f.phone":"Phone",
+  "account.submit":"Log in","account.submitreg":"Create my account","account.demo":"View demo →",
+  "account.welcome":"Welcome, Karim","account.d.orders":"My orders","account.d.docs":"My documents","account.d.notif":"Notifications","account.d.profile":"My profile","account.logout":"Log out",
+  "account.orders.title":"My order history",
+  "account.docs.title":"My documents","account.docs.p":"Invoices, contracts and certificates linked to your orders.",
+  "account.notif.title":"Recent notifications",
+  "account.n1":"Your order CMD-2026-118 is going through customs clearance.","account.n2":"New document available: GLC 300 proforma invoice.","account.n3":"Your test drive appointment is confirmed for September 18.",
+  "admin.eyebrow":"Administration","admin.title":"Dashboard — Administrator",
+  "admin.nav.overview":"Overview","admin.nav.vehicles":"Vehicles","admin.nav.orders":"Orders","admin.nav.customers":"Customers","admin.nav.agents":"Agents","admin.nav.payments":"Payments","admin.nav.settings":"Settings",
+  "admin.kpi1":"Vehicles in stock","admin.kpi2":"Orders in progress","admin.kpi3":"Monthly revenue (DZD)","admin.kpi4":"New customers",
+  "admin.vehicles.title":"Fleet management","admin.vehicles.add":"+ Add vehicle",
+  "admin.orders.title":"Recent orders",
+  "admin.notice":"Create, edit and delete actions will be enabled once connected to the back-end API.",
+  "th.vehicle":"Vehicle","th.brand":"Brand","th.price":"Price","th.status":"Status","th.stock":"Stock","th.actions":"Actions","th.order":"Order","th.client":"Customer","th.amount":"Amount","th.date":"Date",
+  "agent.eyebrow":"Agent Space","agent.title":"Dashboard — Sales agent",
+  "agent.kpi1":"Assigned customers","agent.kpi2":"Orders to process","agent.kpi3":"Monthly sales (DZD)","agent.kpi4":"Conversion rate",
+  "agent.orders.title":"Orders to process","agent.clients.title":"My customers",
+  "status.pending":"Pending","status.progress":"Processing","status.customs":"Customs","status.delivered":"Delivered","status.new":"New","status.used":"Used","status.instock":"In stock","status.low":"Low stock",
+  "toast.form":"Thank you! Your request has been recorded. A VIVAL AUTO advisor will contact you within 24h.",
+  "toast.backend":"This action will be available once the back-end is connected.",
+  "toast.reserved":"Vehicle reserved — an advisor will contact you to finalize the order.",
+  "toast.login":"This is a demo. Real sign-in will be enabled with back-end authentication.",
+},
+ar:{
+  "topbar.hours":"الإثنين–السبت · 9 صباحاً–6 مساءً",
+  "nav.home":"الرئيسية","nav.vehicles":"المركبات","nav.showroom":"صالة العرض","nav.import":"استيراد المركبات",
+  "nav.about":"من نحن","nav.contact":"اتصل بنا","nav.account":"فضاء العميل","nav.cta":"اطلب استيراد مركبة",
+  "footer.tagline":"وكالة السيارات والاستيراد المرجعية في الجزائر. مركبات جديدة ومستعملة وحسب الطلب الدولي.",
+  "footer.nav":"التصفح","footer.space":"الفضاءات","footer.agent":"فضاء الوكيل","footer.admin":"الإدارة",
+  "footer.contact":"اتصل بنا","footer.rights":"© 2026 VIVAL AUTO — جميع الحقوق محفوظة","footer.legal":"الإشعار القانوني · الخصوصية · الشروط",
+  "home.eyebrow":"وكالة واستيراد — الجزائر",
+  "home.title":"التميز في عالم السيارات، مستورَد من أجلكم",
+  "home.lede":"تقوم VIVAL AUTO باختيار واستيراد وتسليم المركبات الجديدة والمستعملة في جميع أنحاء الجزائر، مع مرافقة كاملة من الطلب إلى التسليم.",
+  "home.cta1":"اكتشف صالة العرض","home.cta2":"اطلب استيراد مركبة",
+  "home.stat1n":"+500","home.stat1l":"مركبة تم تسليمها","home.stat2n":"14","home.stat2l":"علامة شريكة","home.stat3n":"9 سنوات","home.stat3l":"من الخبرة",
+  "home.badge1":"جديد","home.badge1v":"GLC 300 متوفرة",
+  "home.badge2":"متوسط المدة","home.badge2v":"21 يوماً للاستيراد",
+  "home.brands":"العلامات المتوفرة",
+  "home.featured.eyebrow":"مختارات","home.featured.title":"مركبات مميزة","home.featured.link":"عرض كامل الكتالوج ←",
+  "home.process.eyebrow":"طريقة عملنا","home.process.title":"استيراد مركبة، بكل ثقة",
+  "home.process.s1t":"البحث الدولي","home.process.s1p":"نحدد المركبة التي تبحثون عنها بالضبط عبر شبكة موردينا المعتمدين في أوروبا وآسيا.",
+  "home.process.s2t":"التخليص الجمركي والوثائق","home.process.s2p":"يتولى فريقنا كافة الإجراءات الجمركية والمطابقة والتسجيل في الجزائر.",
+  "home.process.s3t":"التسليم في الجزائر","home.process.s3p":"يتم تسليم المركبة في صالة العرض أو في العنوان الذي تختارونه، جاهزة للقيادة مع كامل الوثائق.",
+  "home.cta.title":"لديك سؤال قبل اتخاذ القرار؟","home.cta.p":"يرد مستشارونا خلال 24 ساعة، بالفرنسية أو العربية أو الإنجليزية.",
+  "home.cta.btn":"تواصل مع مستشار",
+  "vehicles.eyebrow":"الكتالوج","vehicles.title":"جميع مركباتنا",
+  "vehicles.f.brand":"العلامة","vehicles.f.type":"الحالة","vehicles.f.cat":"الفئة","vehicles.f.price":"الميزانية القصوى (دج)","vehicles.f.search":"بحث",
+  "vehicles.f.all":"الكل","vehicles.f.new":"جديدة","vehicles.f.used":"مستعملة","vehicles.f.showroom":"صالة العرض","vehicles.f.import":"استيراد",
+  "vehicles.f.searchph":"الطراز، العلامة…",
+  "vehicles.results":"مركبة متوفرة",
+  "vehicles.viewbtn":"عرض التفاصيل",
+  "showroom.eyebrow":"صالة عرضنا","showroom.title":"زوروا صالة عرضنا في الجزائر العاصمة",
+  "showroom.lede":"أكثر من 40 مركبة معروضة بشكل دائم، تجارب قيادة بموعد مسبق، ومستشارون متوفرون 6 أيام في الأسبوع.",
+  "showroom.infot":"معلومات عملية","showroom.addr":"العنوان","showroom.addrv":"الطريق الوطني رقم 5، المنطقة الصناعية، الجزائر","showroom.phone":"الهاتف","showroom.hourst":"ساعات العمل",
+  "showroom.d1":"الإثنين – الخميس","showroom.d2":"الجمعة","showroom.d3":"السبت","showroom.d4":"الأحد","showroom.closed":"مغلق",
+  "showroom.fleet.title":"المركبات المعروضة حالياً",
+  "import.eyebrow":"خدمة الاستيراد","import.title":"اطلب مركبة أحلامك، أينما كانت",
+  "import.lede":"تستورد VIVAL AUTO مركبات جديدة ومستعملة من أوروبا وآسيا والولايات المتحدة، مع تكفل كامل بالإجراءات الجمركية.",
+  "import.form.title":"طلب عرض سعر للاستيراد",
+  "import.form.brand":"العلامة المرغوبة","import.form.model":"الطراز المرغوب","import.form.budget":"الميزانية التقديرية (دج)","import.form.name":"الاسم الكامل",
+  "import.form.phone":"الهاتف","import.form.email":"البريد الإلكتروني","import.form.msg":"تفاصيل إضافية (الفئة، السنة، اللون…)","import.form.submit":"إرسال الطلب",
+  "import.avail.title":"مركبات الاستيراد المتوفرة",
+  "detail.specs":"المواصفات","detail.year":"السنة","detail.mileage":"الكيلومترات","detail.fuel":"الوقود","detail.gearbox":"ناقل الحركة","detail.color":"اللون","detail.status":"التوفر",
+  "detail.available":"متوفرة","detail.pricefrom":"السعر","detail.reserve":"احجز هذه المركبة","detail.contact":"تواصل مع مستشار",
+  "detail.related":"مركبات مشابهة",
+  "about.eyebrow":"قصتنا","about.title":"VIVAL AUTO، ثقة في عالم السيارات منذ 2017",
+  "about.lede":"تأسست في الجزائر العاصمة، وأصبحت VIVAL AUTO مرجعاً في توزيع واستيراد السيارات في الجزائر، من خلال الجمع بين الخبرة التقنية والصرامة الإدارية وخدمة عملاء لا تشوبها شائبة.",
+  "about.tl1y":"2017","about.tl1t":"تأسيس VIVAL AUTO","about.tl1p":"افتتاح أول صالة عرض في الجزائر العاصمة، متخصصة في المركبات المستعملة المعتمدة.",
+  "about.tl2y":"2019","about.tl2t":"إطلاق خدمة الاستيراد","about.tl2p":"إنشاء شبكة موردين معتمدين في أوروبا للاستيراد حسب الطلب.",
+  "about.tl3y":"2022","about.tl3t":"توسيع صالة العرض","about.tl3p":"توسيع المنشآت وإضافة علامات شريكة جديدة.",
+  "about.tl4y":"2026","about.tl4t":"منصة VIVAL AUTO الرقمية","about.tl4p":"إطلاق المنصة الكاملة: تتبع الطلبات، فضاء العميل والإدارة الرقمية للمخزون.",
+  "about.s1":"مركبة تم تسليمها","about.s2":"علامة شريكة","about.s3":"عميل راضٍ","about.s4":"ولاية مغطاة",
+  "contact.eyebrow":"اتصل بنا","contact.title":"لنتحدث عن مشروعكم السياري",
+  "contact.lede":"سؤال حول مركبة، طلب أو استيراد؟ فريقنا يرد بسرعة.",
+  "contact.f.name":"الاسم الكامل","contact.f.email":"البريد الإلكتروني","contact.f.phone":"الهاتف","contact.f.subject":"الموضوع","contact.f.msg":"الرسالة","contact.f.submit":"إرسال الرسالة",
+  "contact.info1t":"صالة العرض","contact.info1p":"الطريق الوطني رقم 5، المنطقة الصناعية، الجزائر",
+  "contact.info2t":"الهاتف","contact.info2p":"213 23 45 67 89+",
+  "contact.info3t":"البريد الإلكتروني","contact.info3p":"contact@vival-auto.dz",
+  "account.eyebrow":"فضاء العميل","account.title":"ادخل إلى حسابك",
+  "account.login":"تسجيل الدخول","account.register":"إنشاء حساب",
+  "account.f.email":"البريد الإلكتروني","account.f.pass":"كلمة المرور","account.f.name":"الاسم الكامل","account.f.phone":"الهاتف",
+  "account.submit":"تسجيل الدخول","account.submitreg":"إنشاء حسابي","account.demo":"عرض توضيحي ←",
+  "account.welcome":"مرحباً، كريم","account.d.orders":"طلباتي","account.d.docs":"وثائقي","account.d.notif":"الإشعارات","account.d.profile":"ملفي الشخصي","account.logout":"تسجيل الخروج",
+  "account.orders.title":"سجل طلباتي",
+  "account.docs.title":"وثائقي","account.docs.p":"الفواتير والعقود والشهادات المرتبطة بطلباتكم.",
+  "account.notif.title":"الإشعارات الأخيرة",
+  "account.n1":"طلبكم CMD-2026-118 قيد التخليص الجمركي.","account.n2":"وثيقة جديدة متوفرة: فاتورة أولية GLC 300.","account.n3":"تم تأكيد موعد تجربة القيادة في 18 سبتمبر.",
+  "admin.eyebrow":"الإدارة","admin.title":"لوحة التحكم — المدير",
+  "admin.nav.overview":"نظرة عامة","admin.nav.vehicles":"المركبات","admin.nav.orders":"الطلبات","admin.nav.customers":"العملاء","admin.nav.agents":"الوكلاء","admin.nav.payments":"المدفوعات","admin.nav.settings":"الإعدادات",
+  "admin.kpi1":"مركبات في المخزون","admin.kpi2":"طلبات قيد المعالجة","admin.kpi3":"رقم الأعمال الشهري (دج)","admin.kpi4":"عملاء جدد",
+  "admin.vehicles.title":"إدارة الأسطول","admin.vehicles.add":"+ إضافة مركبة",
+  "admin.orders.title":"الطلبات الأخيرة",
+  "admin.notice":"سيتم تفعيل إجراءات الإضافة والتعديل والحذف عند ربط الواجهة الخلفية.",
+  "th.vehicle":"المركبة","th.brand":"العلامة","th.price":"السعر","th.status":"الحالة","th.stock":"المخزون","th.actions":"إجراءات","th.order":"الطلب","th.client":"العميل","th.amount":"المبلغ","th.date":"التاريخ",
+  "agent.eyebrow":"فضاء الوكيل","agent.title":"لوحة التحكم — وكيل تجاري",
+  "agent.kpi1":"عملاء مسندون","agent.kpi2":"طلبات قيد المعالجة","agent.kpi3":"مبيعات الشهر (دج)","agent.kpi4":"معدل التحويل",
+  "agent.orders.title":"طلبات قيد المعالجة","agent.clients.title":"عملائي",
+  "status.pending":"قيد الانتظار","status.progress":"قيد المعالجة","status.customs":"تخليص جمركي","status.delivered":"تم التسليم","status.new":"جديدة","status.used":"مستعملة","status.instock":"متوفرة","status.low":"مخزون منخفض",
+  "toast.form":"شكراً لكم! تم تسجيل طلبكم بنجاح. سيتواصل معكم أحد مستشاري VIVAL AUTO خلال 24 ساعة.",
+  "toast.backend":"سيتم تفعيل هذا الإجراء عند ربط الواجهة الخلفية.",
+  "toast.reserved":"تم حجز المركبة — سيتواصل معكم أحد المستشارين لإتمام الطلب.",
+  "toast.login":"هذا عرض توضيحي فقط. سيتم تفعيل تسجيل الدخول الفعلي مع نظام المصادقة الخلفي.",
+}
+};
+
+let LANG = 'fr';
+const money = n => new Intl.NumberFormat('fr-DZ').format(n) + ' DZD';
+const t = k => (DICT[LANG] && DICT[LANG][k]) || DICT.fr[k] || k;
+
+function showToast(key){
+  const el = document.getElementById('toast');
+  el.textContent = t(key);
+  el.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>el.classList.remove('show'), 4200);
+}
+
+/* =========================================================
+   PAGE TEMPLATES
+   ========================================================= */
+function vehicleCard(v){
+  const cover = (v.images && v.images.length)
+    ? `<img src="${v.images[0]}" alt="${v.brand} ${v.model}" loading="lazy">`
+    : CAR_ICONS[v.icon];
+  return `<div class="vcard" data-navlink="#vehicle/${v.id}">
+    <div class="thumb">
+      <span class="tag ${v.type==='used'?'used':''}">${v.type==='new'?t('status.new'):t('status.used')}</span>
+      ${cover}
+    </div>
+    <div class="body">
+      <span class="brand-m">${v.brand}</span>
+      <h4>${v.model} <span style="color:var(--paper-dim); font-weight:400; font-size:15px;">${v.version}</span></h4>
+      <div class="specs"><span>${v.year}</span><span>·</span><span>${loc(v.fuel)}</span><span>·</span><span>${loc(v.gearbox)}</span></div>
+      <div class="price-row">
+        <span class="price">${money(v.price)}</span>
+        <button class="btn btn-outline btn-sm" data-navlink="#vehicle/${v.id}">${t('vehicles.viewbtn')}</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderHome(){
+  const featured = VEHICLES.slice(0,4).map(vehicleCard).join('');
+  const brands = [...new Set(VEHICLES.map(v=>v.brand))];
+  return `
+  <section class="hero">
+    <div class="hero-wordmark">VIVAL</div>
+    <svg class="hero-stripes" viewBox="0 0 500 300" fill="none">
+      <path d="M40 60 C220 20 340 90 480 40" stroke="var(--brass)" stroke-width="10" stroke-linecap="round"/>
+      <path d="M20 110 C230 70 360 140 490 95" stroke="var(--brass)" stroke-width="6" stroke-linecap="round" opacity=".6"/>
+    </svg>
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">${t('home.eyebrow')}</div>
+        <h1 class="display">${t('home.title')}</h1>
+        <p class="lede" style="margin-top:18px;">${t('home.lede')}</p>
+        <div class="hero-actions">
+          <a href="#showroom" class="btn btn-brass">${t('home.cta1')}</a>
+          <a href="#import" class="btn btn-outline">${t('home.cta2')}</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><b data-animate-num>${t('home.stat1n')}</b><span>${t('home.stat1l')}</span></div>
+          <div class="stat"><b data-animate-num>${t('home.stat2n')}</b><span>${t('home.stat2l')}</span></div>
+          <div class="stat"><b data-animate-num>${t('home.stat3n')}</b><span>${t('home.stat3l')}</span></div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="plate">${CAR_ICONS[1]}</div>
+        <div class="badge-float b1"><b>${t('home.badge1v')}</b>${t('home.badge1')}</div>
+        <div class="badge-float b2"><b>${t('home.badge2v')}</b>${t('home.badge2')}</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="brandstrip">
+    <div class="wrap">
+      <span class="label">${t('home.brands')}</span>
+      <div class="brandchips">${brands.map(b=>`<span class="chip">${b}</span>`).join('')}</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div><div class="eyebrow">${t('home.featured.eyebrow')}</div><h2 class="display">${t('home.featured.title')}</h2></div>
+        <a href="#vehicles" class="btn btn-ghost">${t('home.featured.link')}</a>
+      </div>
+      <div class="vgrid bento">${featured}</div>
+    </div>
+  </section>
+
+  <section style="padding-top:0;">
+    <div class="wrap">
+      <div class="eyebrow">${t('home.process.eyebrow')}</div>
+      <h2 class="display" style="margin-bottom:36px; max-width:18ch;">${t('home.process.title')}</h2>
+      <div class="steps">
+        <div class="step"><span class="num">01</span><h4>${t('home.process.s1t')}</h4><p>${t('home.process.s1p')}</p></div>
+        <div class="step"><span class="num">02</span><h4>${t('home.process.s2t')}</h4><p>${t('home.process.s2p')}</p></div>
+        <div class="step"><span class="num">03</span><h4>${t('home.process.s3t')}</h4><p>${t('home.process.s3p')}</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0;">
+    <div class="wrap">
+      <div class="cta-banner">
+        <div><h3 class="display">${t('home.cta.title')}</h3><p style="color:var(--paper-dim); margin-top:8px;">${t('home.cta.p')}</p></div>
+        <a href="#contact" class="btn btn-brass">${t('home.cta.btn')}</a>
+      </div>
+    </div>
+  </section>`;
+}
+
+function renderVehiclesPage(){
+  const brands = [...new Set(VEHICLES.map(v=>v.brand))];
+  return `
+  <section class="section-tight" style="padding-bottom:0;">
+    <div class="wrap">
+      <div class="eyebrow">${t('vehicles.eyebrow')}</div>
+      <h1 class="display" style="font-size:40px; margin-bottom:30px;">${t('vehicles.title')}</h1>
+      <div class="filterbar">
+        <div class="field"><label>${t('vehicles.f.brand')}</label>
+          <select id="f-brand"><option value="">${t('vehicles.f.all')}</option>${brands.map(b=>`<option value="${b}">${b}</option>`).join('')}</select>
+        </div>
+        <div class="field"><label>${t('vehicles.f.type')}</label>
+          <select id="f-type"><option value="">${t('vehicles.f.all')}</option><option value="new">${t('vehicles.f.new')}</option><option value="used">${t('vehicles.f.used')}</option></select>
+        </div>
+        <div class="field"><label>${t('vehicles.f.cat')}</label>
+          <select id="f-cat"><option value="">${t('vehicles.f.all')}</option><option value="showroom">${t('vehicles.f.showroom')}</option><option value="import">${t('vehicles.f.import')}</option></select>
+        </div>
+        <div class="field"><label>${t('vehicles.f.price')}</label>
+          <input type="number" id="f-price" placeholder="15 000 000">
+        </div>
+        <div class="field"><label>${t('vehicles.f.search')}</label>
+          <input type="text" id="f-search" placeholder="${t('vehicles.f.searchph')}">
+        </div>
+      </div>
+      <div class="results-count" id="v-count"></div>
+      <div class="vgrid" id="v-grid"></div>
+    </div>
+  </section>`;
+}
+
+function filterVehicles(){
+  const brand = document.getElementById('f-brand')?.value;
+  const type = document.getElementById('f-type')?.value;
+  const cat = document.getElementById('f-cat')?.value;
+  const price = document.getElementById('f-price')?.value;
+  const search = (document.getElementById('f-search')?.value || '').toLowerCase();
+  const results = VEHICLES.filter(v=>{
+    if(brand && v.brand !== brand) return false;
+    if(type && v.type !== type) return false;
+    if(cat && v.cat !== cat) return false;
+    if(price && v.price > Number(price)) return false;
+    if(search && !(v.brand+' '+v.model+' '+v.version).toLowerCase().includes(search)) return false;
+    return true;
+  });
+  document.getElementById('v-grid').innerHTML = results.map(vehicleCard).join('') || '<p style="color:var(--paper-dim)">—</p>';
+  document.getElementById('v-count').textContent = results.length + ' ' + t('vehicles.results');
+}
+
+function renderShowroom(){
+  const fleet = VEHICLES.filter(v=>v.cat==='showroom').map(vehicleCard).join('');
+  return `
+  <section class="section-tight detail-hero" style="padding-bottom:0;">
+    <svg class="detail-stripes" viewBox="0 0 400 220" fill="none">
+      <path d="M20 40 C160 10 260 60 380 26" stroke="var(--brass)" stroke-width="7" stroke-linecap="round"/>
+      <path d="M10 76 C170 48 270 100 390 66" stroke="var(--brass)" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+    </svg>
+    <div class="wrap">
+      <div class="eyebrow">${t('showroom.eyebrow')}</div>
+      <h1 class="display" style="font-size:40px;">${t('showroom.title')}</h1>
+      <p class="lede" style="margin-top:14px;">${t('showroom.lede')}</p>
+    </div>
+  </section>
+  <section>
+    <div class="wrap" style="display:grid; grid-template-columns:1.3fr 1fr; gap:48px;">
+      <div class="map-illustration">
+        <svg viewBox="0 0 500 220" width="100%" height="100%">
+          <rect width="500" height="220" fill="none"/>
+          <path d="M0 160 Q120 120 250 150 T500 130" stroke="#2A313B" stroke-width="18" fill="none"/>
+          <path d="M0 60 Q160 100 260 60 T500 90" stroke="#2A313B" stroke-width="10" fill="none"/>
+          <circle class="map-pulse" cx="250" cy="120" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="250" cy="120" r="7" fill="currentColor"/>
+          <path d="M250 120 v-26" stroke="currentColor" stroke-width="2"/>
+          <circle cx="250" cy="94" r="10" fill="currentColor"/>
+          <text x="250" y="150" text-anchor="middle" fill="#B7B2A6" font-size="12" font-family="Inter">Alger, Algérie</text>
+        </svg>
+      </div>
+      <div>
+        <h3 class="display" style="margin-bottom:18px;">${t('showroom.infot')}</h3>
+        <p style="font-size:13.5px; color:var(--paper-dim); margin-bottom:4px;">${t('showroom.addr')}</p>
+        <p style="margin-bottom:16px;">${t('showroom.addrv')}</p>
+        <p style="font-size:13.5px; color:var(--paper-dim); margin-bottom:4px;">${t('showroom.phone')}</p>
+        <p style="margin-bottom:22px;">+213 23 45 67 89</p>
+        <h4 style="font-size:14px; margin-bottom:12px; font-weight:600;">${t('showroom.hourst')}</h4>
+        <table class="hours-table">
+          <tr><td>${t('showroom.d1')}</td><td>9h – 18h</td></tr>
+          <tr><td>${t('showroom.d2')}</td><td>9h – 12h</td></tr>
+          <tr><td>${t('showroom.d3')}</td><td>9h – 17h</td></tr>
+          <tr><td>${t('showroom.d4')}</td><td>${t('showroom.closed')}</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+  <section style="padding-top:0;">
+    <div class="wrap">
+      <h2 class="display" style="margin-bottom:30px; font-size:28px;">${t('showroom.fleet.title')}</h2>
+      <div class="vgrid">${fleet}</div>
+    </div>
+  </section>`;
+}
+
+function renderImport(){
+  const avail = VEHICLES.filter(v=>v.cat==='import').map(vehicleCard).join('');
+  return `
+  <section class="section-tight" style="padding-bottom:0;">
+    <div class="wrap">
+      <div class="eyebrow">${t('import.eyebrow')}</div>
+      <h1 class="display" style="font-size:40px; max-width:20ch;">${t('import.title')}</h1>
+      <p class="lede" style="margin-top:14px;">${t('import.lede')}</p>
+    </div>
+  </section>
+  <section>
+    <div class="wrap" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;">
+      <div>
+        <h3 class="display" style="margin-bottom:22px;">${t('import.form.title')}</h3>
+        <form id="import-form" class="formgrid">
+          <div class="form-field"><label>${t('import.form.brand')}</label><input required type="text"></div>
+          <div class="form-field"><label>${t('import.form.model')}</label><input required type="text"></div>
+          <div class="form-field"><label>${t('import.form.budget')}</label><input type="number"></div>
+          <div class="form-field"><label>${t('import.form.name')}</label><input required type="text"></div>
+          <div class="form-field"><label>${t('import.form.phone')}</label><input required type="tel"></div>
+          <div class="form-field"><label>${t('import.form.email')}</label><input required type="email"></div>
+          <div class="form-field full"><label>${t('import.form.msg')}</label><textarea></textarea></div>
+          <div class="full"><button class="btn btn-brass" type="submit">${t('import.form.submit')}</button></div>
+        </form>
+      </div>
+      <div class="steps" style="grid-template-columns:1fr; gap:22px;">
+        <div class="step"><span class="num">01</span><h4>${t('home.process.s1t')}</h4><p>${t('home.process.s1p')}</p></div>
+        <div class="step"><span class="num">02</span><h4>${t('home.process.s2t')}</h4><p>${t('home.process.s2p')}</p></div>
+        <div class="step"><span class="num">03</span><h4>${t('home.process.s3t')}</h4><p>${t('home.process.s3p')}</p></div>
+      </div>
+    </div>
+  </section>
+  <section style="padding-top:0;">
+    <div class="wrap">
+      <h2 class="display" style="margin-bottom:30px; font-size:28px;">${t('import.avail.title')}</h2>
+      <div class="vgrid">${avail}</div>
+    </div>
+  </section>`;
+}
+
+function renderVehicleDetail(id){
+  const v = VEHICLES.find(x=>String(x.id)===String(id)) || VEHICLES[0];
+  const related = VEHICLES.filter(x=>x.brand===v.brand && x.id!==v.id).slice(0,3);
+  const relatedHtml = (related.length?related:VEHICLES.filter(x=>x.id!==v.id).slice(0,3)).map(vehicleCard).join('');
+  const hasPhotos = v.images && v.images.length;
+  const mainVisual = hasPhotos ? `<img src="${v.images[0]}" alt="${v.brand} ${v.model}">` : CAR_ICONS[v.icon];
+  const thumbsHtml = hasPhotos
+    ? v.images.map((url,i)=>`<div data-thumb="${i}" class="${i===0?'active':''}"><img src="${url}" alt=""></div>`).join('')
+    : CAR_ICONS.map((ic,i)=>`<div data-thumb="${i}" class="${i===v.icon?'active':''}">${ic}</div>`).join('');
+  return `
+  <section class="section-tight detail-hero">
+    <svg class="detail-stripes" viewBox="0 0 400 220" fill="none">
+      <path d="M20 40 C160 10 260 60 380 26" stroke="var(--brass)" stroke-width="7" stroke-linecap="round"/>
+      <path d="M10 76 C170 48 270 100 390 66" stroke="var(--brass)" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+    </svg>
+    <div class="wrap">
+      <div class="detail-grid">
+        <div>
+          <div class="gallery-main draw-target" data-photo-mode="${hasPhotos?'1':'0'}" data-vehicle-id="${v.id}">${mainVisual}</div>
+          <div class="gallery-thumbs">${thumbsHtml}</div>
+        </div>
+        <div>
+          <span class="brand-m">${v.brand}</span>
+          <h1 class="display" style="font-size:32px; margin:6px 0 18px;">${v.model} <span style="color:var(--paper-dim); font-weight:400;">${v.version}</span></h1>
+          <div class="price-box">
+            <div class="amount">${money(v.price)}</div>
+            <table class="spec-table" style="margin:14px 0 0;">
+              <tr><td>${t('detail.status')}</td><td><span class="status-pill ok">${t('detail.available')}</span></td></tr>
+            </table>
+            <div class="actions">
+              <button class="btn btn-brass" id="reserve-btn">${t('detail.reserve')}</button>
+              <a href="#contact" class="btn btn-outline">${t('detail.contact')}</a>
+            </div>
+          </div>
+          <h4 style="font-size:14px; margin-bottom:6px; font-weight:600;">${t('detail.specs')}</h4>
+          <table class="spec-table">
+            <tr><td>${t('detail.year')}</td><td>${v.year}</td></tr>
+            <tr><td>${t('detail.mileage')}</td><td>${v.mileage.toLocaleString('fr-FR')} km</td></tr>
+            <tr><td>${t('detail.fuel')}</td><td>${loc(v.fuel)}</td></tr>
+            <tr><td>${t('detail.gearbox')}</td><td>${loc(v.gearbox)}</td></tr>
+            <tr><td>${t('detail.color')}</td><td>${loc(v.color)}</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section style="padding-top:0;">
+    <div class="wrap">
+      <h2 class="display" style="margin-bottom:26px; font-size:24px;">${t('detail.related')}</h2>
+      <div class="vgrid cols-3">${relatedHtml}</div>
+    </div>
+  </section>`;
+}
+
+function renderAbout(){
+  return `
+  <section class="section-tight" style="padding-bottom:0;">
+    <div class="wrap">
+      <div class="eyebrow">${t('about.eyebrow')}</div>
+      <h1 class="display" style="font-size:40px; max-width:20ch;">${t('about.title')}</h1>
+      <p class="lede" style="margin-top:14px;">${t('about.lede')}</p>
+    </div>
+  </section>
+  <section>
+    <div class="wrap">
+      <div class="timeline">
+        <div class="tl-item"><span class="yr">${t('about.tl1y')}</span><div><h4>${t('about.tl1t')}</h4><p>${t('about.tl1p')}</p></div></div>
+        <div class="tl-item"><span class="yr">${t('about.tl2y')}</span><div><h4>${t('about.tl2t')}</h4><p>${t('about.tl2p')}</p></div></div>
+        <div class="tl-item"><span class="yr">${t('about.tl3y')}</span><div><h4>${t('about.tl3t')}</h4><p>${t('about.tl3p')}</p></div></div>
+        <div class="tl-item"><span class="yr">${t('about.tl4y')}</span><div><h4>${t('about.tl4t')}</h4><p>${t('about.tl4p')}</p></div></div>
+      </div>
+    </div>
+  </section>
+  <section style="padding-top:0;">
+    <div class="wrap">
+      <div class="statsband">
+        <div><div class="n" data-animate-num>500+</div><div class="l">${t('about.s1')}</div></div>
+        <div><div class="n" data-animate-num>14</div><div class="l">${t('about.s2')}</div></div>
+        <div><div class="n" data-animate-num>1200+</div><div class="l">${t('about.s3')}</div></div>
+        <div><div class="n" data-animate-num>28</div><div class="l">${t('about.s4')}</div></div>
+      </div>
+    </div>
+  </section>`;
+}
+
+function renderContact(){
+  return `
+  <section class="section-tight" style="padding-bottom:0;">
+    <div class="wrap">
+      <div class="eyebrow">${t('contact.eyebrow')}</div>
+      <h1 class="display" style="font-size:40px;">${t('contact.title')}</h1>
+      <p class="lede" style="margin-top:14px;">${t('contact.lede')}</p>
+    </div>
+  </section>
+  <section>
+    <div class="wrap" style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
+      <form id="contact-form" class="formgrid">
+        <div class="form-field"><label>${t('contact.f.name')}</label><input required type="text"></div>
+        <div class="form-field"><label>${t('contact.f.email')}</label><input required type="email"></div>
+        <div class="form-field"><label>${t('contact.f.phone')}</label><input type="tel"></div>
+        <div class="form-field"><label>${t('contact.f.subject')}</label><input type="text"></div>
+        <div class="form-field full"><label>${t('contact.f.msg')}</label><textarea required></textarea></div>
+        <div class="full"><button class="btn btn-brass" type="submit">${t('contact.f.submit')}</button></div>
+      </form>
+      <div class="infogrid" style="grid-template-columns:1fr;">
+        <div class="infocard"><h4>${t('contact.info1t')}</h4><p>${t('contact.info1p')}</p></div>
+        <div class="infocard"><h4>${t('contact.info2t')}</h4><p>${t('contact.info2p')}</p></div>
+        <div class="infocard"><h4>${t('contact.info3t')}</h4><p>${t('contact.info3p')}</p></div>
+      </div>
+    </div>
+  </section>`;
+}
+
+function renderAccount(){
+  return `
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="eyebrow">${t('account.eyebrow')}</div>
+      <h1 class="display" style="font-size:34px; margin-bottom:30px;">${t('account.title')}</h1>
+      <div id="account-login">
+        <div class="auth-card">
+          <div class="auth-tabs">
+            <button class="active" id="tab-login">${t('account.login')}</button>
+            <button id="tab-register">${t('account.register')}</button>
+          </div>
+          <form id="account-form" style="display:flex; flex-direction:column; gap:14px; text-align:start;">
+            <div class="form-field"><label>${t('account.f.email')}</label><input type="email" required></div>
+            <div class="form-field"><label>${t('account.f.pass')}</label><input type="password" required></div>
+            <button class="btn btn-brass" type="submit" style="margin-top:8px;">${t('account.submit')}</button>
+          </form>
+          <button class="btn btn-ghost btn-sm" id="account-demo" style="margin-top:18px;">${t('account.demo')}</button>
+        </div>
+      </div>
+      <div id="account-dash" style="display:none;">
+        <div class="dash-shell">
+          <div class="dash-side">
+            <div class="who"><div class="avatar">K</div><div><div class="nm">${t('account.welcome')}</div><div class="rl">Client VIVAL AUTO</div></div></div>
+            <div class="dash-nav">
+              <button class="active" data-acc-tab="orders">${t('account.d.orders')}</button>
+              <button data-acc-tab="docs">${t('account.d.docs')}</button>
+              <button data-acc-tab="notif">${t('account.d.notif')}</button>
+              <button data-acc-tab="profile">${t('account.d.profile')}</button>
+              <button id="account-logout" style="margin-top:16px; border-top:1px solid var(--line); padding-top:16px;">${t('account.logout')}</button>
+            </div>
+          </div>
+          <div class="dash-main">
+            <div class="dash-tab active" data-acc-panel="orders">
+              <div class="table-card">
+                <div class="thead-row"><h3>${t('account.orders.title')}</h3></div>
+                <table class="data"><thead><tr><th>${t('th.order')}</th><th>${t('th.vehicle')}</th><th>${t('th.amount')}</th><th>${t('th.date')}</th><th>${t('th.status')}</th></tr></thead>
+                <tbody>${ORDERS.slice(0,2).map(o=>`<tr><td>${o.id}</td><td>${o.vehicle}</td><td>${money(o.amount)}</td><td>${o.date}</td><td>${statusPill(o.status)}</td></tr>`).join('')}</tbody></table>
+              </div>
+            </div>
+            <div class="dash-tab" data-acc-panel="docs">
+              <div class="table-card"><h3 style="margin-bottom:8px;">${t('account.docs.title')}</h3><p style="font-size:13px; color:var(--paper-dim); margin-bottom:18px;">${t('account.docs.p')}</p>
+              <table class="data"><tbody>
+                <tr><td>Facture proforma — GLC 300</td><td style="text-align:end;"><button class="row-actions" data-action-backend>PDF</button></td></tr>
+                <tr><td>Contrat de vente — CMD-2026-117</td><td style="text-align:end;"><button class="row-actions" data-action-backend>PDF</button></td></tr>
+              </tbody></table></div>
+            </div>
+            <div class="dash-tab" data-acc-panel="notif">
+              <div class="table-card"><h3 style="margin-bottom:14px;">${t('account.notif.title')}</h3>
+                <div class="notice">${t('account.n1')}</div>
+                <div class="notice">${t('account.n2')}</div>
+                <div class="notice">${t('account.n3')}</div>
+              </div>
+            </div>
+            <div class="dash-tab" data-acc-panel="profile">
+              <div class="table-card"><form class="formgrid">
+                <div class="form-field"><label>${t('account.f.name')}</label><input type="text" value="Karim Belaïd"></div>
+                <div class="form-field"><label>${t('account.f.email')}</label><input type="email" value="karim.belaid@example.com"></div>
+                <div class="form-field"><label>${t('account.f.phone')}</label><input type="tel" value="+213 555 12 34 56"></div>
+              </form></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
+function statusPill(s){
+  const map = {pending:'warn', progress:'info', customs:'warn', delivered:'ok', new:'info', used:'info', instock:'ok', low:'danger'};
+  return `<span class="status-pill ${map[s]||'info'}">${t('status.'+s)}</span>`;
+}
+
+function renderBackendNotice(kind){
+  return `<section class="section-tight"><div class="wrap" style="max-width:600px; margin:0 auto; text-align:center;">
+    <div class="eyebrow">${kind==='admin'?t('admin.eyebrow'):t('agent.eyebrow')}</div>
+    <h1 class="display" style="font-size:26px; margin-bottom:16px;">Backend pas encore connecté</h1>
+    <p style="color:var(--paper-dim); margin-bottom:6px;">Renseignez SUPABASE_URL et SUPABASE_ANON_KEY en haut du fichier pour activer la connexion, le catalogue en direct et l'upload de photos.</p>
+    <p style="color:var(--paper-dim); font-size:13px;">Voir /supabase/schema.sql et le README pour la mise en place (10 minutes).</p>
+  </div></section>`;
+}
+
+function renderStaffLogin(kind){
+  return `<section class="section-tight"><div class="wrap">
+    <div class="auth-card" style="max-width:420px;">
+      <h3 class="display" style="margin-bottom:22px;">${kind==='admin'?t('admin.title'):t('agent.title')}</h3>
+      <form id="staff-login-form" style="display:flex; flex-direction:column; gap:14px; text-align:start;">
+        <div class="form-field"><label>${t('account.f.email')}</label><input type="email" name="email" required></div>
+        <div class="form-field"><label>${t('account.f.pass')}</label><input type="password" name="password" required></div>
+        <button class="btn btn-brass" type="submit" style="margin-top:8px;">${t('account.submit')}</button>
+      </form>
+      <p id="staff-login-error" style="color:var(--danger); font-size:13px; margin-top:14px; display:none;"></p>
+      <p style="font-size:12.5px; color:var(--paper-dim); margin-top:18px;">Ce compte doit avoir le rôle admin ou agent. Créez d'abord un compte via Espace Client, puis promouvez-le dans Supabase (voir schema.sql).</p>
+    </div>
+  </div></section>`;
+}
+
+function renderAdmin(){
+  if(!BACKEND_READY) return renderBackendNotice('admin');
+  if(!CURRENT_USER || (CURRENT_ROLE!=='admin' && CURRENT_ROLE!=='agent')) return renderStaffLogin('admin');
+  return `
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="eyebrow">${t('admin.eyebrow')}</div>
+      <h1 class="display" style="font-size:32px; margin-bottom:26px;">${t('admin.title')}</h1>
+      <div class="dash-shell">
+        <div class="dash-side">
+          <div class="who"><div class="avatar">${(CURRENT_USER.email||'A')[0].toUpperCase()}</div><div><div class="nm">${CURRENT_USER.email}</div><div class="rl">${CURRENT_ROLE==='admin'?'Administrateur':'Agent'}</div></div></div>
+          <div class="dash-nav">
+            <button class="active" data-admin-tab="overview">${t('admin.nav.overview')}</button>
+            <button data-admin-tab="vehicles">${t('admin.nav.vehicles')}</button>
+            <button data-admin-tab="orders">${t('admin.nav.orders')}</button>
+            <button data-action-backend>${t('admin.nav.customers')}</button>
+            <button data-action-backend>${t('admin.nav.agents')}</button>
+            <button data-action-backend>${t('admin.nav.payments')}</button>
+            <button data-action-backend>${t('admin.nav.settings')}</button>
+            <button id="staff-logout" style="margin-top:16px; border-top:1px solid var(--line); padding-top:16px;">${t('account.logout')}</button>
+          </div>
+        </div>
+        <div class="dash-main">
+          <div class="dash-tab active" data-admin-panel="overview">
+            <div class="kpi-row">
+              <div class="kpi"><div class="v">${VEHICLES.length}</div><div class="l">${t('admin.kpi1')}</div><div class="d up">${USING_LIVE_DATA?'live':'demo'}</div></div>
+              <div class="kpi"><div class="v">23</div><div class="l">${t('admin.kpi2')}</div><div class="d up">+3</div></div>
+              <div class="kpi"><div class="v">48,2M</div><div class="l">${t('admin.kpi3')}</div><div class="d up">+11%</div></div>
+              <div class="kpi"><div class="v">31</div><div class="l">${t('admin.kpi4')}</div><div class="d down">-2%</div></div>
+            </div>
+            <div class="notice">${t('admin.notice')}</div>
+            <div class="table-card">
+              <div class="thead-row"><h3>${t('admin.orders.title')}</h3></div>
+              <table class="data"><thead><tr><th>${t('th.order')}</th><th>${t('th.client')}</th><th>${t('th.vehicle')}</th><th>${t('th.amount')}</th><th>${t('th.status')}</th></tr></thead>
+              <tbody>${ORDERS.map(o=>`<tr><td>${o.id}</td><td>${o.client}</td><td>${o.vehicle}</td><td>${money(o.amount)}</td><td>${statusPill(o.status)}</td></tr>`).join('')}</tbody></table>
+            </div>
+          </div>
+          <div class="dash-tab" data-admin-panel="vehicles">
+            <div class="table-card">
+              <div class="thead-row"><h3>${t('admin.vehicles.title')}</h3><button class="btn btn-brass btn-sm" id="toggle-add-vehicle">${t('admin.vehicles.add')}</button></div>
+              <div id="add-vehicle-panel" style="display:none; margin-bottom:22px; padding:20px; border:1px solid var(--line); border-radius:var(--radius-lg); background:var(--ink);">
+                <form id="add-vehicle-form" class="formgrid">
+                  <div class="form-field"><label>${t('vehicles.f.brand')}</label><input required type="text" name="brand"></div>
+                  <div class="form-field"><label>Modèle</label><input required type="text" name="model"></div>
+                  <div class="form-field"><label>Version</label><input type="text" name="version"></div>
+                  <div class="form-field"><label>${t('detail.year')}</label><input required type="number" name="year" value="2026"></div>
+                  <div class="form-field"><label>${t('detail.mileage')}</label><input type="number" name="mileage" value="0"></div>
+                  <div class="form-field"><label>Prix (DZD)</label><input required type="number" name="price"></div>
+                  <div class="form-field"><label>${t('vehicles.f.type')}</label>
+                    <select name="vtype"><option value="new">${t('vehicles.f.new')}</option><option value="used">${t('vehicles.f.used')}</option></select>
+                  </div>
+                  <div class="form-field"><label>${t('vehicles.f.cat')}</label>
+                    <select name="category"><option value="showroom">${t('vehicles.f.showroom')}</option><option value="import">${t('vehicles.f.import')}</option></select>
+                  </div>
+                  <div class="form-field"><label>${t('detail.fuel')}</label><input type="text" name="fuel" placeholder="Diesel"></div>
+                  <div class="form-field"><label>${t('detail.gearbox')}</label><input type="text" name="gearbox" placeholder="Automatique"></div>
+                  <div class="form-field"><label>${t('detail.color')}</label><input type="text" name="color" placeholder="Blanc"></div>
+                  <div class="form-field full"><label>Photos du véhicule</label><input type="file" name="images" accept="image/*" multiple></div>
+                  <div class="full" style="display:flex; gap:10px;">
+                    <button class="btn btn-brass" type="submit">${t('admin.vehicles.add')}</button>
+                    <button class="btn btn-outline" type="button" id="cancel-add-vehicle">Annuler</button>
+                  </div>
+                </form>
+              </div>
+              <table class="data"><thead><tr><th>${t('th.vehicle')}</th><th>${t('th.brand')}</th><th>${t('th.price')}</th><th>${t('th.stock')}</th><th>${t('th.actions')}</th></tr></thead>
+              <tbody>${VEHICLES.map(v=>`<tr><td>${v.model} ${v.version||''}</td><td>${v.brand}</td><td>${money(v.price)}</td><td>${statusPill('instock')}</td><td><div class="row-actions"><button data-delete-vehicle="${v.id}">Suppr.</button></div></td></tr>`).join('')}</tbody></table>
+            </div>
+          </div>
+          <div class="dash-tab" data-admin-panel="orders">
+            <div class="table-card">
+              <div class="thead-row"><h3>${t('admin.orders.title')}</h3></div>
+              <table class="data"><thead><tr><th>${t('th.order')}</th><th>${t('th.client')}</th><th>${t('th.vehicle')}</th><th>${t('th.amount')}</th><th>${t('th.date')}</th><th>${t('th.status')}</th><th>${t('th.actions')}</th></tr></thead>
+              <tbody>${ORDERS.map(o=>`<tr><td>${o.id}</td><td>${o.client}</td><td>${o.vehicle}</td><td>${money(o.amount)}</td><td>${o.date}</td><td>${statusPill(o.status)}</td><td><div class="row-actions"><button data-action-backend>Voir</button></div></td></tr>`).join('')}</tbody></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
+function renderAgent(){
+  if(!BACKEND_READY) return renderBackendNotice('agent');
+  if(!CURRENT_USER || (CURRENT_ROLE!=='admin' && CURRENT_ROLE!=='agent')) return renderStaffLogin('agent');
+  return `
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="eyebrow">${t('agent.eyebrow')}</div>
+      <h1 class="display" style="font-size:32px; margin-bottom:26px;">${t('agent.title')}</h1>
+      <div class="kpi-row">
+        <div class="kpi"><div class="v">18</div><div class="l">${t('agent.kpi1')}</div></div>
+        <div class="kpi"><div class="v">7</div><div class="l">${t('agent.kpi2')}</div></div>
+        <div class="kpi"><div class="v">9,4M</div><div class="l">${t('agent.kpi3')}</div></div>
+        <div class="kpi"><div class="v">64%</div><div class="l">${t('agent.kpi4')}</div></div>
+      </div>
+      <div class="table-card">
+        <div class="thead-row"><h3>${t('agent.orders.title')}</h3><button class="btn btn-ghost btn-sm" id="staff-logout">${t('account.logout')}</button></div>
+        <table class="data"><thead><tr><th>${t('th.order')}</th><th>${t('th.client')}</th><th>${t('th.vehicle')}</th><th>${t('th.status')}</th><th>${t('th.actions')}</th></tr></thead>
+        <tbody>${ORDERS.filter(o=>o.status!=='delivered').map(o=>`<tr><td>${o.id}</td><td>${o.client}</td><td>${o.vehicle}</td><td>${statusPill(o.status)}</td><td><div class="row-actions"><button data-action-backend>Traiter</button></div></td></tr>`).join('')}</tbody></table>
+      </div>
+      <div class="table-card">
+        <div class="thead-row"><h3>${t('agent.clients.title')}</h3></div>
+        <table class="data"><thead><tr><th>${t('th.client')}</th><th>Téléphone</th><th>${t('th.status')}</th></tr></thead>
+        <tbody>${ORDERS.map(o=>`<tr><td>${o.client}</td><td>+213 5${Math.floor(10000000+Math.random()*89999999)}</td><td>${statusPill(o.status)}</td></tr>`).join('')}</tbody></table>
+      </div>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   ROUTER
+   ========================================================= */
+const ROUTES = {
+  home: renderHome, vehicles: renderVehiclesPage, showroom: renderShowroom, import: renderImport,
+  about: renderAbout, contact: renderContact, account: renderAccount, admin: renderAdmin, agent: renderAgent
+};
+
+function route(){
+  let hash = (location.hash || '#home').slice(1);
+  let [page, param] = hash.split('/');
+  if(!ROUTES[page] && page !== 'vehicle') page = 'home';
+
+  const main = document.getElementById('main');
+  if(page === 'vehicle'){
+    main.innerHTML = renderVehicleDetail(param);
+  } else {
+    main.innerHTML = ROUTES[page]();
+  }
+
+  document.querySelectorAll('.navlinks a').forEach(a=>{
+    a.classList.toggle('active', a.getAttribute('href') === '#'+page);
+  });
+  placeNavIndicator();
+
+  if(page === 'vehicles'){
+    ['f-brand','f-type','f-cat','f-price','f-search'].forEach(id=>{
+      document.getElementById(id).addEventListener('input', filterVehicles);
+      document.getElementById(id).addEventListener('change', filterVehicles);
+    });
+    filterVehicles();
+  }
+
+  bindPageEvents(page);
+  if(page === 'home' || page === 'about'){ animateStatEls(main); }
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+function placeNavIndicator(activeOverride){
+  const nav = document.getElementById('navlinks');
+  const ind = document.getElementById('navIndicator');
+  if(!nav || !ind) return;
+  const target = activeOverride || nav.querySelector('a.active');
+  if(!target){ ind.classList.remove('show'); return; }
+  const tRect = target.getBoundingClientRect();
+  const nRect = nav.getBoundingClientRect();
+  ind.style.width = tRect.width + 'px';
+  ind.style.transform = `translateX(${tRect.left - nRect.left}px)`;
+  ind.classList.add('show');
+}
+
+document.querySelectorAll('.navlinks a').forEach(a=>{
+  a.addEventListener('mouseenter', ()=> placeNavIndicator(a));
+  a.addEventListener('mouseleave', ()=> placeNavIndicator());
+});
+window.addEventListener('resize', ()=> placeNavIndicator());
+
+function animateStatEls(container){
+  container.querySelectorAll('[data-animate-num]').forEach(el=>{
+    const original = el.textContent;
+    const match = original.match(/\d+/);
+    if(!match) return;
+    const target = parseInt(match[0], 10);
+    const prefix = original.slice(0, match.index);
+    const suffix = original.slice(match.index + match[0].length);
+    const duration = 1000;
+    let start = null;
+    function step(ts){
+      if(start === null) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = prefix + Math.round(eased * target) + suffix;
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+function bindPageEvents(page){
+  document.querySelectorAll('[data-navlink]').forEach(el=>{
+    el.addEventListener('click', (e)=>{ e.preventDefault(); location.hash = el.getAttribute('data-navlink'); });
+  });
+  document.querySelectorAll('[data-action-backend]').forEach(el=>{
+    el.addEventListener('click', ()=> showToast('toast.backend'));
+  });
+  const importForm = document.getElementById('import-form');
+  if(importForm) importForm.addEventListener('submit', async e=>{
+    e.preventDefault();
+    if(BACKEND_READY){
+      const f = new FormData(importForm);
+      const fields = importForm.querySelectorAll('input, textarea');
+      const [brand, model, budget, name, phone, email, message] = Array.from(fields).map(el=>el.value);
+      try{ await sb.from('import_requests').insert({ brand, model, budget: budget||null, full_name:name, phone, email, message }); }catch(err){ console.warn(err); }
+    }
+    showToast('toast.form'); importForm.reset();
+  });
+  const contactForm = document.getElementById('contact-form');
+  if(contactForm) contactForm.addEventListener('submit', async e=>{
+    e.preventDefault();
+    if(BACKEND_READY){
+      const fields = contactForm.querySelectorAll('input, textarea');
+      const [name, email, phone, subject, message] = Array.from(fields).map(el=>el.value);
+      try{ await sb.from('import_requests').insert({ full_name:name, phone, email, message:`[${subject}] ${message}` }); }catch(err){ console.warn(err); }
+    }
+    showToast('toast.form'); contactForm.reset();
+  });
+  const reserveBtn = document.getElementById('reserve-btn');
+  if(reserveBtn) reserveBtn.addEventListener('click', ()=> showToast('toast.reserved'));
+
+  if(page === 'vehicle'){
+    document.querySelectorAll('.gallery-thumbs [data-thumb]').forEach(thumb=>{
+      thumb.addEventListener('click', ()=>{
+        const idx = Number(thumb.dataset.thumb);
+        const main = document.querySelector('.gallery-main');
+        const vid = main.dataset.vehicleId;
+        const v = VEHICLES.find(x=>String(x.id)===String(vid));
+        const isPhoto = main.dataset.photoMode === '1';
+        main.innerHTML = isPhoto ? `<img src="${v.images[idx]}" alt="${v.brand} ${v.model}">` : CAR_ICONS[idx];
+        main.classList.remove('draw-target'); void main.offsetWidth; main.classList.add('draw-target');
+        document.querySelectorAll('.gallery-thumbs [data-thumb]').forEach(d=>d.classList.remove('active'));
+        thumb.classList.add('active');
+      });
+    });
+  }
+
+  if(page === 'account'){
+    const accForm = document.getElementById('account-form');
+    const showDash = ()=>{ document.getElementById('account-login').style.display='none'; document.getElementById('account-dash').style.display='block'; };
+    if(accForm) accForm.addEventListener('submit', e=>{ e.preventDefault(); showToast('toast.login'); });
+    document.getElementById('account-demo')?.addEventListener('click', showDash);
+    document.getElementById('account-logout')?.addEventListener('click', ()=>{
+      document.getElementById('account-login').style.display='block'; document.getElementById('account-dash').style.display='none';
+    });
+    document.querySelectorAll('[data-acc-tab]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('[data-acc-tab]').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('[data-acc-panel]').forEach(p=>p.classList.remove('active'));
+        document.querySelector(`[data-acc-panel="${btn.dataset.accTab}"]`).classList.add('active');
+      });
+    });
+  }
+  if(page === 'admin'){
+    document.querySelectorAll('[data-admin-tab]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('[data-admin-tab]').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('[data-admin-panel]').forEach(p=>p.classList.remove('active'));
+        document.querySelector(`[data-admin-panel="${btn.dataset.adminTab}"]`).classList.add('active');
+      });
+    });
+
+    const toggleBtn = document.getElementById('toggle-add-vehicle');
+    const panel = document.getElementById('add-vehicle-panel');
+    toggleBtn?.addEventListener('click', ()=>{ panel.style.display = panel.style.display === 'none' ? 'block' : 'none'; });
+    document.getElementById('cancel-add-vehicle')?.addEventListener('click', ()=>{ panel.style.display = 'none'; });
+
+    const addForm = document.getElementById('add-vehicle-form');
+    if(addForm) addForm.addEventListener('submit', async e=>{
+      e.preventDefault();
+      const submitBtn = addForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true; submitBtn.textContent = '…';
+      try{
+        const fd = new FormData(addForm);
+        const files = fd.getAll('images').filter(f=>f && f.size > 0);
+        const imageUrls = [];
+        for(const file of files){
+          const path = `${Date.now()}-${Math.random().toString(36).slice(2)}-${file.name}`;
+          const { error: upErr } = await sb.storage.from('vehicle-images').upload(path, file);
+          if(upErr){ console.warn('upload failed', upErr); continue; }
+          const { data: pub } = sb.storage.from('vehicle-images').getPublicUrl(path);
+          if(pub?.publicUrl) imageUrls.push(pub.publicUrl);
+        }
+        const row = {
+          brand: fd.get('brand'), model: fd.get('model'), version: fd.get('version'),
+          year: Number(fd.get('year')), mileage: Number(fd.get('mileage')||0), price: Number(fd.get('price')),
+          vtype: fd.get('vtype'), category: fd.get('category'),
+          fuel: fd.get('fuel'), gearbox: fd.get('gearbox'), color: fd.get('color'),
+          images: imageUrls, created_by: CURRENT_USER.id
+        };
+        const { error: insErr } = await sb.from('vehicles').insert(row);
+        if(insErr){ alert('Erreur: ' + insErr.message); }
+        else { await loadVehiclesFromSupabase(); }
+      } catch(err){
+        alert('Erreur inattendue: ' + err.message);
+      } finally{
+        submitBtn.disabled = false; submitBtn.textContent = t('admin.vehicles.add');
+      }
+    });
+
+    document.querySelectorAll('[data-delete-vehicle]').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        if(!confirm('Supprimer ce véhicule ?')) return;
+        const id = btn.dataset.deleteVehicle;
+        const { error } = await sb.from('vehicles').delete().eq('id', id);
+        if(error){ alert('Erreur: ' + error.message); return; }
+        await loadVehiclesFromSupabase();
+      });
+    });
+  }
+
+  if(page === 'admin' || page === 'agent'){
+    const staffForm = document.getElementById('staff-login-form');
+    if(staffForm) staffForm.addEventListener('submit', async e=>{
+      e.preventDefault();
+      const fd = new FormData(staffForm);
+      const { error } = await sb.auth.signInWithPassword({ email: fd.get('email'), password: fd.get('password') });
+      const errEl = document.getElementById('staff-login-error');
+      if(error){ errEl.style.display = 'block'; errEl.textContent = error.message; return; }
+      await refreshSession();
+      route();
+    });
+    document.getElementById('staff-logout')?.addEventListener('click', async ()=>{
+      await sb.auth.signOut();
+      await refreshSession();
+      route();
+    });
+  }
+}
+
+/* =========================================================
+   LANGUAGE SWITCH
+   ========================================================= */
+function setLang(lang){
+  LANG = lang;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('.lang-switch button').forEach(b=> b.classList.toggle('active', b.dataset.lang === lang));
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = t(el.getAttribute('data-i18n')); });
+  route();
+}
+
+document.querySelectorAll('.lang-switch button').forEach(b=>{
+  b.addEventListener('click', ()=> setLang(b.dataset.lang));
+});
+
+window.addEventListener('hashchange', route);
+route();
+(async function boot(){
+  if(!BACKEND_READY) return;
+  await refreshSession();
+  await loadVehiclesFromSupabase();
+  if(sb?.auth?.onAuthStateChange){
+    sb.auth.onAuthStateChange(async ()=>{ await refreshSession(); route(); });
+  }
+})();
+</script>
+</body>
+</html>
